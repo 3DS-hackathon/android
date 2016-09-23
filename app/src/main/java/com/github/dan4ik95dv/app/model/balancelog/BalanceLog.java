@@ -10,26 +10,20 @@ import io.realm.annotations.PrimaryKey;
 
 
 public class BalanceLog extends RealmObject {
+    @SerializedName("action")
+    String action;
+    @SerializedName("delta_count")
+    Integer deltaCount;
+    @SerializedName("desc")
+    String desc;
+    @SerializedName("request")
+    Request request;
+    @SerializedName("task")
+    Task task;
     @Index
     @PrimaryKey
     @SerializedName("id")
     private int id;
-
-    @SerializedName("action")
-    String action;
-
-    @SerializedName("delta_count")
-    Integer deltaCount;
-
-    @SerializedName("desc")
-    String desc;
-
-    @SerializedName("request")
-    Request request;
-
-    @SerializedName("task")
-    Task task;
-
 
     public int getId() {
         return id;

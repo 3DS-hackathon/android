@@ -1,8 +1,5 @@
 package com.github.dan4ik95dv.app.util;
 
-import java.text.SimpleDateFormat;
-import java.util.Locale;
-
 public class Constants {
     public static final String PACKAGE = "com.github.dan4ik95dv.app";
     public static final int SCHEMA_VERSION = 1;

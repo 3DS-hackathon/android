@@ -21,7 +21,6 @@ import com.google.gson.stream.JsonWriter;
 
 import java.io.File;
 import java.io.IOException;
-import java.lang.annotation.Annotation;
 import java.lang.reflect.Type;
 import java.util.concurrent.TimeUnit;
 
@@ -33,8 +32,6 @@ import io.realm.RealmList;
 import io.realm.RealmObject;
 import okhttp3.Cache;
 import okhttp3.OkHttpClient;
-import okhttp3.ResponseBody;
-import retrofit2.Converter;
 import retrofit2.Retrofit;
 import retrofit2.adapter.rxjava.RxJavaCallAdapterFactory;
 import retrofit2.converter.gson.GsonConverterFactory;
@@ -162,7 +159,7 @@ public class NetModule {
     @Singleton
     OkHttpClient provideOkHttpClient(Cache cache) {
         return new OkHttpClient().newBuilder()
-               //.cache(cache)
+                //.cache(cache)
                 .connectTimeout(Constants.Api.CONNECT_TIMEOUT, TimeUnit.SECONDS)
                 .readTimeout(Constants.Api.READ_TIMEOUT, TimeUnit.SECONDS)
                 .writeTimeout(Constants.Api.WRITE_TIMEOUT, TimeUnit.SECONDS)
@@ -175,17 +172,11 @@ public class NetModule {
     @Singleton
     Retrofit provideRetrofit(Gson gson, OkHttpClient okHttpClient) {
         return new Retrofit.Builder()
-                .baseUrl(BuildConfig.DEBUG ? Constants.Api.API_URL_DEV :Constants.Api.API_URL)
+                .baseUrl(BuildConfig.DEBUG ? Constants.Api.API_URL_DEV : Constants.Api.API_URL)
                 .addCallAdapterFactory(RxJavaCallAdapterFactory.create())
                 .addConverterFactory(GsonConverterFactory.create(gson))
                 .client(okHttpClient)
                 .build();
-    }
-
-    @Provides
-    @Singleton
-    Converter<ResponseBody, BodyResponse> provideConverter(Retrofit retrofit) {
-        return retrofit.responseBodyConverter(BodyResponse.class, new Annotation[0]);
     }
 
 

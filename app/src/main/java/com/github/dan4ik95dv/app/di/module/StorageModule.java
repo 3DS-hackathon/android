@@ -4,8 +4,6 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
 
-import java.util.HashMap;
-
 import javax.inject.Singleton;
 
 import dagger.Module;

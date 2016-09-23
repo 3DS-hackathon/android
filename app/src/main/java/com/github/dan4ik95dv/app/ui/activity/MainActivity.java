@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 
 import com.github.dan4ik95dv.app.R;
+import com.github.dan4ik95dv.app.di.component.activity.DaggerMainComponent;
 import com.github.dan4ik95dv.app.di.module.activity.MainModule;
 import com.github.dan4ik95dv.app.ui.presenter.MainPresenter;
 

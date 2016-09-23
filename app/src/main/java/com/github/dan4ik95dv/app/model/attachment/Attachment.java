@@ -8,19 +8,16 @@ import io.realm.annotations.PrimaryKey;
 
 
 public class Attachment extends RealmObject {
+    @SerializedName("file_name")
+    String fileName;
+    @SerializedName("mime_type")
+    String mimeType;
+    @SerializedName("path")
+    String path;
     @Index
     @PrimaryKey
     @SerializedName("id")
     private int id;
-
-    @SerializedName("file_name")
-    String fileName;
-
-    @SerializedName("mime_type")
-    String mimeType;
-
-    @SerializedName("path")
-    String path;
 
     public int getId() {
         return id;

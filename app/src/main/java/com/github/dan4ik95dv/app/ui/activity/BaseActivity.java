@@ -41,9 +41,11 @@ public class BaseActivity extends AppCompatActivity {
     public void nextToMainActivity() {
         AndroidUtils.startActivitySafe(this, new Intent(this, MainActivity.class), R.string.error_unknown);
     }
+
     public void nextToLoginActivity() {
         AndroidUtils.startActivitySafe(this, new Intent(this, MainActivity.class), R.string.error_unknown);
     }
+
     public void nextToMainActivity(Bundle bundle) {
         Intent intent = new Intent(this, MainActivity.class);
         if (bundle != null) {

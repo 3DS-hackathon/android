@@ -10,26 +10,22 @@ import io.realm.annotations.PrimaryKey;
 
 
 public class Task extends RealmObject {
+    @SerializedName("progress")
+    Integer progress;
+    @SerializedName("progress_user")
+    Integer progressUser;
+    @SerializedName("total_count")
+    Integer totalCount;
+    @SerializedName("name")
+    String name;
+    @SerializedName("desc")
+    String desc;
+    @SerializedName("type")
+    String type;
     @Index
     @PrimaryKey
     @SerializedName("id")
     private int id;
-
-    @SerializedName("current_count")
-    Integer currentCoint;
-
-    @SerializedName("total_count")
-    Integer totalCount;
-
-    @SerializedName("name")
-    String name;
-
-    @SerializedName("desc")
-    String desc;
-
-    @SerializedName("type")
-    String type;
-
     @SerializedName("users")
     private RealmList<User> users;
 
@@ -41,12 +37,20 @@ public class Task extends RealmObject {
         this.id = id;
     }
 
-    public Integer getCurrentCoint() {
-        return currentCoint;
+    public Integer getProgressUser() {
+        return progressUser;
     }
 
-    public void setCurrentCoint(Integer currentCoint) {
-        this.currentCoint = currentCoint;
+    public void setProgressUser(Integer progressUser) {
+        this.progressUser = progressUser;
+    }
+
+    public Integer getProgress() {
+        return progress;
+    }
+
+    public void setProgress(Integer progress) {
+        this.progress = progress;
     }
 
     public Integer getTotalCount() {

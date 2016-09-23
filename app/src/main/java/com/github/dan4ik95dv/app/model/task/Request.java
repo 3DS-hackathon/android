@@ -10,22 +10,18 @@ import io.realm.annotations.PrimaryKey;
 
 
 public class Request extends RealmObject {
+    @SerializedName("delta_count")
+    Integer deltaCount;
+    @SerializedName("status")
+    String status;
+    @SerializedName("type")
+    String type;
+    @SerializedName("attachments")
+    RealmList<Attachment> attachments;
     @Index
     @PrimaryKey
     @SerializedName("id")
     private int id;
-
-    @SerializedName("delta_count")
-    Integer deltaCount;
-
-    @SerializedName("status")
-    String status;
-
-    @SerializedName("type")
-    String type;
-
-    @SerializedName("attachments")
-    RealmList<Attachment> attachments;
 
     public int getId() {
         return id;

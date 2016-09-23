@@ -66,7 +66,7 @@ android {
         versionCode 1
         versionName "1.0"
         multiDexEnabled true
-//        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
     buildTypes {
         debug {
@@ -145,10 +145,11 @@ dependencies {
     compile 'com.google.dagger:dagger-producers:2.7'
     apt 'com.google.dagger:dagger-compiler:2.7'
 
-//    /*Unit test*/
-//    androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
-//        exclude group: 'com.android.support', module: 'support-annotations'
-//    })
-//
-//    testCompile 'junit:junit:4.12'
+    /*Unit test*/
+    androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
+        exclude group: 'com.android.support', module: 'support-annotations'
+    })
+
+    testCompile 'junit:junit:4.12'
+    compile 'com.android.support.constraint:constraint-layout:1.0.0-alpha8'
 }

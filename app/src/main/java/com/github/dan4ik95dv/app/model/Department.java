@@ -10,23 +10,18 @@ import io.realm.annotations.PrimaryKey;
 
 
 public class Department extends RealmObject {
+    @SerializedName("avatar")
+    String avatar;
+    @SerializedName("desc")
+    String desc;
+    @SerializedName("name")
+    String name;
+    @SerializedName("rating")
+    Integer rating;
     @Index
     @PrimaryKey
     @SerializedName("id")
     private int id;
-
-    @SerializedName("avatar")
-    String avatar;
-
-    @SerializedName("desc")
-    String desc;
-
-    @SerializedName("name")
-    String name;
-
-    @SerializedName("rating")
-    Integer rating;
-
     @SerializedName("users")
     private RealmList<User> users;
 

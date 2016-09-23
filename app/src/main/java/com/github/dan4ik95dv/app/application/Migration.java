@@ -1,7 +1,6 @@
 package com.github.dan4ik95dv.app.application;
 
 import io.realm.DynamicRealm;
-import io.realm.FieldAttribute;
 import io.realm.RealmMigration;
 import io.realm.RealmSchema;
 
