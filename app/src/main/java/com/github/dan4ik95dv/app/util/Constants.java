@@ -7,6 +7,7 @@ public class Constants {
     public static final String PACKAGE = "com.github.dan4ik95dv.app";
     public static final int SCHEMA_VERSION = 1;
     public static final String NAME_SCHEME = "app";
+    public static final int SPLASH_DELAY = 3000;
 
     public static class Api {
         public static final int CONNECT_TIMEOUT = 10;

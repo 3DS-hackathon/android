@@ -1,7 +1,6 @@
 package com.github.dan4ik95dv.app.ui.activity;
 
 import android.os.Bundle;
-import android.widget.Toast;
 
 import com.github.dan4ik95dv.app.R;
 import com.github.dan4ik95dv.app.di.component.activity.DaggerSplashComponent;
@@ -36,16 +35,12 @@ public class SplashActivity extends BaseActivity implements SplashMvpView {
         presenter.detachView();
     }
 
-    @Override
-    public void startOffline(Bundle bundle) {
-        Toast.makeText(this, R.string.offline_mode, Toast.LENGTH_LONG).show();
-        nextToMainActivity(bundle);
-    }
 
     @Override
-    public void startApp(Bundle bundle) {
-        nextToMainActivity(bundle);
+    public void startLogin() {
+        nextToLoginActivity();
     }
+
 
 }
 

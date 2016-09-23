@@ -84,7 +84,7 @@ public interface RestInterface {
 
     @GET("/user/achievements")
     Call<List<Achievement>> getAchievements(@Query("id") Integer id);
-    
+
     @GET("/user/achievements")
     Call<List<Achievement>> getAchievements();
 

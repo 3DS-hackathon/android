@@ -12,7 +12,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.widget.EditText;
 import android.widget.TextView;
 
-import com.github.dan4ik95dv.app.MainActivity;
 import com.github.dan4ik95dv.app.R;
 import com.github.dan4ik95dv.app.util.AndroidUtils;
 import com.github.dan4ik95dv.app.util.Constants;
@@ -42,7 +41,9 @@ public class BaseActivity extends AppCompatActivity {
     public void nextToMainActivity() {
         AndroidUtils.startActivitySafe(this, new Intent(this, MainActivity.class), R.string.error_unknown);
     }
-
+    public void nextToLoginActivity() {
+        AndroidUtils.startActivitySafe(this, new Intent(this, MainActivity.class), R.string.error_unknown);
+    }
     public void nextToMainActivity(Bundle bundle) {
         Intent intent = new Intent(this, MainActivity.class);
         if (bundle != null) {
