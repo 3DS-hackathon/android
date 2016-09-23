@@ -75,14 +75,20 @@ public interface RestInterface {
     * ===============
     * Достижения
     *
-    * Deprecated !!!
+    *
     *
     * */
 
-    @GET("/profile/achievements")
+    @GET("/user/achievements")
     Call<List<Achievement>> getAchievements(@Query("id") Integer id, @Query("offset") Integer offset, @Query("count") Integer count);
 
-    @GET("/profile/achievements")
+    @GET("/user/achievements")
+    Call<List<Achievement>> getAchievements(@Query("id") Integer id);
+    
+    @GET("/user/achievements")
+    Call<List<Achievement>> getAchievements();
+
+    @GET("/user/achievements")
     Call<List<Achievement>> getAchievements(@Query("offset") Integer offset, @Query("count") Integer count);
 
     /*
@@ -129,6 +135,13 @@ public interface RestInterface {
 
     @GET("/tasks")
     Call<List<Task>> getTasks(@Query("offset") Integer offset, @Query("count") Integer count);
+
+    @GET("/user/tasks")
+    Call<List<Task>> getUserTasks();
+
+    @GET("/user/tasks")
+    Call<List<Task>> getUserTasks(@Query("offset") Integer offset, @Query("count") Integer count);
+
 
 
 }

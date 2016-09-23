@@ -26,4 +26,44 @@ public class Request extends RealmObject {
 
     @SerializedName("attachments")
     RealmList<Attachment> attachments;
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public Integer getDeltaCount() {
+        return deltaCount;
+    }
+
+    public void setDeltaCount(Integer deltaCount) {
+        this.deltaCount = deltaCount;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
+
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
+    }
+
+    public RealmList<Attachment> getAttachments() {
+        return attachments;
+    }
+
+    public void setAttachments(RealmList<Attachment> attachments) {
+        this.attachments = attachments;
+    }
 }

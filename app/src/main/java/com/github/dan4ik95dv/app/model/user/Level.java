@@ -20,8 +20,48 @@ public class Level extends RealmObject {
     private String name;
 
     @SerializedName("start_count")
-    private String startCount;
+    private Integer startCount;
 
     @SerializedName("end_count")
-    private String endCount;
+    private Integer endCount;
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public Integer getLevel() {
+        return level;
+    }
+
+    public void setLevel(Integer level) {
+        this.level = level;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public Integer getStartCount() {
+        return startCount;
+    }
+
+    public void setStartCount(Integer startCount) {
+        this.startCount = startCount;
+    }
+
+    public Integer getEndCount() {
+        return endCount;
+    }
+
+    public void setEndCount(Integer endCount) {
+        this.endCount = endCount;
+    }
 }

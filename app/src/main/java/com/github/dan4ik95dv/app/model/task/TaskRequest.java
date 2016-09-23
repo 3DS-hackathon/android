@@ -12,4 +12,27 @@ public class TaskRequest {
     @SerializedName("attachments")
     List<Integer> attachments;
 
+    public Integer getTaskId() {
+        return taskId;
+    }
+
+    public void setTaskId(Integer taskId) {
+        this.taskId = taskId;
+    }
+
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
+    }
+
+    public List<Integer> getAttachments() {
+        return attachments;
+    }
+
+    public void setAttachments(List<Integer> attachments) {
+        this.attachments = attachments;
+    }
 }
