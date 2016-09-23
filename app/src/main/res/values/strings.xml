@@ -1,0 +1,11 @@
+<resources>
+    <string name="app_name">app</string>
+    <string name="error_unknown">Произошла непридвиденная ошибка</string>
+    <string name="title_internet_not_worked">Отсутствует подключение к интернету</string>
+    <string name="msg_internet_not_worked">Отсутствует подключение к интернету, проверьте настройки сети.</string>
+    <string name="ok">OK</string>
+    <string name="offline_mode">Отсутствует подключение к сети, приложение будет работать в оффлайн режиме</string>
+    <string name="about_title">О программе</string>
+    <string name="main_title">Главная</string>
+    <string name="settings_title">Настройки</string>
+</resources>

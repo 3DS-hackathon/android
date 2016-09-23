@@ -1,0 +1,144 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.github.dan4ik95dv.app"
+    android:installLocation="auto">
+
+    <supports-screens
+        android:anyDensity="true"
+        android:largeScreens="true"
+        android:normalScreens="true"
+        android:smallScreens="true"
+        android:xlargeScreens="true" />
+
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+    <uses-permission android:name="android.permission.INTERNET" />
+
+    <!--<uses-permission android:name="com.github.dan4ik95dv.app.permission.MAPS_RECEIVE" />-->
+    <!--<uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />-->
+    <!--<uses-permission android:name="com.google.android.providers.gsf.permission.READ_GSERVICES" />-->
+    <!--<uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />-->
+
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+
+    <!--<permission-->
+        <!--android:name="${manifestApplicationId}.permission.C2D_MESSAGE"-->
+        <!--android:protectionLevel="signature" />-->
+    <!--<uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />-->
+    <!--<uses-permission android:name="${manifestApplicationId}.permission.C2D_MESSAGE" />-->
+    <!--<uses-permission android:name="com.google.android.c2dm.permission.RECEIVE" />-->
+    <!--<uses-permission android:name="android.permission.VIBRATE" />-->
+    <!--<uses-permission android:name="com.htc.launcher.permission.READ_SETTINGS" />-->
+    <!--<uses-permission android:name="com.htc.launcher.permission.UPDATE_SHORTCUT" />-->
+    <!--<uses-permission android:name="com.sonyericsson.home.permission.BROADCAST_BADGE" />-->
+    <!--<uses-permission android:name="com.anddoes.launcher.permission.UPDATE_COUNT" />-->
+    <!--<uses-permission android:name="com.majeur.launcher.permission.UPDATE_BADGE" />-->
+    <!--<uses-permission android:name="com.sec.android.provider.badge.permission.READ" />-->
+    <!--<uses-permission android:name="com.sec.android.provider.badge.permission.WRITE" />-->
+
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
+
+
+    <!--<uses-feature-->
+    <!--android:name="android.hardware.location"-->
+    <!--android:required="false" />-->
+    <!--<uses-feature-->
+    <!--android:name="android.hardware.location.gps"-->
+    <!--android:required="false" />-->
+    <!--<uses-feature-->
+    <!--android:name="android.hardware.location.network"-->
+    <!--android:required="false" />-->
+
+
+    <application
+        android:name="com.github.dan4ik95dv.app.application.App"
+        android:allowBackup="false"
+        android:configChanges="orientation|screenSize"
+        android:icon="@mipmap/ic_launcher"
+        android:label="@string/app_name"
+        android:largeHeap="true"
+        android:supportsRtl="false"
+        android:theme="@style/AppTheme">
+
+        <activity
+            android:name="com.github.dan4ik95dv.app.ui.activity.SplashActivity"
+            android:label="@string/app_name"
+            android:noHistory="true"
+            android:screenOrientation="portrait"
+            android:theme="@style/FullscreenTheme">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+
+        <!-- Google Analytics -->
+        <!--<receiver-->
+            <!--android:name="com.google.android.gms.analytics.CampaignTrackingReceiver"-->
+            <!--android:enabled="true"-->
+            <!--android:exported="true"-->
+            <!--android:permission="android.permission.INSTALL_PACKAGES">-->
+            <!--<intent-filter>-->
+                <!--<action android:name="com.android.vending.INSTALL_REFERRER" />-->
+            <!--</intent-filter>-->
+        <!--</receiver>-->
+
+        <!--<service android:name="com.google.android.gms.analytics.CampaignTrackingService" />-->
+        <!--<receiver-->
+            <!--android:name="com.google.android.gms.analytics.AnalyticsReceiver"-->
+            <!--android:enabled="true">-->
+            <!--<intent-filter>-->
+                <!--<action android:name="com.google.android.gms.analytics.ANALYTICS_DISPATCH" />-->
+            <!--</intent-filter>-->
+        <!--</receiver>-->
+        <!--<service-->
+            <!--android:name="com.google.android.gms.analytics.AnalyticsService"-->
+            <!--android:enabled="true"-->
+            <!--android:exported="false" />-->
+
+
+        <meta-data
+            android:name="com.google.android.gms.version"
+            android:value="@integer/google_play_services_version" />
+
+        <!--<meta-data-->
+            <!--android:name="onesignal_app_id"-->
+            <!--android:value="${onesignal_app_id}" />-->
+        <!---->
+        <!--<meta-data-->
+            <!--android:name="onesignal_google_project_number"-->
+            <!--android:value="str:${onesignal_google_project_number}" />-->
+
+        <!--<receiver-->
+            <!--android:name="com.onesignal.GcmBroadcastReceiver"-->
+            <!--android:permission="com.google.android.c2dm.permission.SEND">-->
+            <!--<intent-filter>-->
+                <!--<action android:name="com.google.android.c2dm.intent.RECEIVE" />-->
+                <!--<category android:name="${manifestApplicationId}" />-->
+            <!--</intent-filter>-->
+        <!--</receiver>-->
+
+        <!--<receiver android:name="com.onesignal.NotificationOpenedReceiver" />-->
+        <!--<service android:name="com.onesignal.GcmIntentService" />-->
+        <!--<service-->
+            <!--android:name="com.onesignal.SyncService"-->
+            <!--android:stopWithTask="false" />-->
+
+        <!--<activity-->
+            <!--android:name="com.onesignal.PermissionsActivity"-->
+            <!--android:theme="@android:style/Theme.Translucent.NoTitleBar" />-->
+
+
+        <!--<meta-data-->
+            <!--android:name="com.google.android.geo.API_KEY"-->
+            <!--android:value="API_KEY" />-->
+
+        <!--<meta-data-->
+            <!--android:name="com.google.android.gms.analytics.globalConfigResource"-->
+            <!--android:resource="@xml/global_tracker" />-->
+
+        <meta-data
+            android:name="io.fabric.ApiKey"
+            android:value="84c2f0626305f79165aad5467f8c2b3096236867" />
+    </application>
+
+</manifest>

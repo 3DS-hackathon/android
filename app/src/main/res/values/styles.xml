@@ -1,0 +1,44 @@
+<resources>
+
+    <style name="DialogThemeBase" parent="Theme.AppCompat.Light.Dialog.Alert">
+        <item name="android:background">@android:color/white</item>
+    </style>
+
+    <style name="DialogTheme" parent="DialogThemeBase" />
+
+    <style name="AppSplashScreen" parent="AppThemeBase">
+        <item name="android:background">@color/colorPrimary</item>
+    </style>
+
+    <style name="FullscreenTheme" parent="AppTheme">
+        <item name="android:actionBarStyle">@style/FullscreenActionBarStyle</item>
+        <item name="android:windowActionBarOverlay">true</item>
+        <item name="android:windowBackground">@null</item>
+    </style>
+
+    <style name="FullscreenActionBarStyle" parent="Widget.AppCompat.ActionBar">
+        <item name="android:background">@color/black_overlay</item>
+    </style>
+
+    <style name="AppTheme" parent="AppThemeBase" />
+
+    <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
+
+    <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
+
+    <style name="AppThemeBase" parent="Theme.AppCompat.NoActionBar">
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorAccent">@color/colorAccent</item>
+        <item name="colorControlActivated">@android:color/white</item>
+        <item name="typeface">roboto_light</item>
+        <item name="android:windowBackground">@color/background</item>
+        <item name="colorControlNormal">#FFFFFF</item>
+    </style>
+
+    <style name="AppLogoOnSplashScreen">
+        <item name="android:layout_marginRight">@dimen/large_space</item>
+        <item name="android:layout_marginLeft">@dimen/large_space</item>
+    </style>
+
+</resources>
