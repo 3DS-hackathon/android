@@ -26,9 +26,6 @@ public class User extends RealmObject {
     @SerializedName("full_name")
     private String fullName;
 
-    @SerializedName("level")
-    private Integer level;
-
     @SerializedName("phone")
     private String phone;
 
@@ -38,4 +35,6 @@ public class User extends RealmObject {
     @SerializedName("department")
     private Department department;
 
+    @SerializedName("level")
+    private Level level;
 }

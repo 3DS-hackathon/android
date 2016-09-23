@@ -1,12 +1,17 @@
 package com.github.dan4ik95dv.app.io.api;
 
-import com.github.dan4ik95dv.app.model.achievement.AchievementResponse;
-import com.github.dan4ik95dv.app.model.attachment.AttachmentResponse;
-import com.github.dan4ik95dv.app.model.task.RequestResponse;
+import com.github.dan4ik95dv.app.model.Department;
+import com.github.dan4ik95dv.app.model.achievement.Achievement;
+import com.github.dan4ik95dv.app.model.attachment.Attachment;
+import com.github.dan4ik95dv.app.model.balancelog.BalanceLog;
+import com.github.dan4ik95dv.app.model.task.Request;
+import com.github.dan4ik95dv.app.model.task.Task;
 import com.github.dan4ik95dv.app.model.task.TaskRequest;
 import com.github.dan4ik95dv.app.model.user.LoginRequest;
-import com.github.dan4ik95dv.app.model.user.LoginResponse;
-import com.github.dan4ik95dv.app.model.user.ProfileResponse;
+import com.github.dan4ik95dv.app.model.user.Token;
+import com.github.dan4ik95dv.app.model.user.User;
+
+import java.util.List;
 
 import okhttp3.MultipartBody;
 import retrofit2.Call;
@@ -27,17 +32,29 @@ public interface RestInterface {
      * */
 
     @POST("/login")
-    Call<LoginResponse> login(@Body LoginRequest loginRequest);
+    Call<Token> login(@Body LoginRequest loginRequest);
 
+    /*
+     * Upload files
+     * ===============
+     * Загрузка файлов
+     *
+     * */
 
     @Multipart
     @POST("/attach")
-    Call<AttachmentResponse> upload(@Part MultipartBody.Part file);
+    Call<Attachment> upload(@Part MultipartBody.Part file);
 
-
+    /*
+     * Request task
+     * ===============
+     * Оставить реквест на выполненный таск.
+     *
+     * */
 
     @POST("/request")
-    Call<RequestResponse> requestTask(@Body TaskRequest taskRequest);
+    Call<Request> requestTask(@Body TaskRequest taskRequest);
+
 
    /*
     * Profile
@@ -46,11 +63,11 @@ public interface RestInterface {
     *
     * */
 
-    @GET("/profile")
-    Call<ProfileResponse> getProfile(@Query("id") Integer id);
+    @GET("/user")
+    Call<User> getUser(@Query("id") Integer id);
 
-    @GET("/profile")
-    Call<ProfileResponse> getProfile();
+    @GET("/user")
+    Call<User> getUser();
 
 
    /*
@@ -58,13 +75,15 @@ public interface RestInterface {
     * ===============
     * Достижения
     *
+    * Deprecated !!!
+    *
     * */
 
     @GET("/profile/achievements")
-    Call<AchievementResponse> getAchievements(@Query("id") Integer id, @Query("offset") Integer offset, @Query("count") Integer count);
+    Call<List<Achievement>> getAchievements(@Query("id") Integer id, @Query("offset") Integer offset, @Query("count") Integer count);
 
     @GET("/profile/achievements")
-    Call<AchievementResponse> getAchievements(@Query("offset") Integer offset, @Query("count") Integer count);
+    Call<List<Achievement>> getAchievements(@Query("offset") Integer offset, @Query("count") Integer count);
 
     /*
     * Balance Log
@@ -73,17 +92,17 @@ public interface RestInterface {
     *
     * */
 
-    @GET("/profile/log")
-    Call<> getBalanceLog();
+    @GET("/user/log")
+    Call<List<BalanceLog>> getBalanceLog();
 
-    @GET("/profile/log")
-    Call<> getBalanceLog(@Query("id") Integer id);
+    @GET("/user/log")
+    Call<List<BalanceLog>> getBalanceLog(@Query("id") Integer id);
 
-    @GET("/profile/log")
-    Call<> getBalanceLog(@Query("id") Integer id, @Query("offset") Integer offset, @Query("count") Integer count);
+    @GET("/user/log")
+    Call<List<BalanceLog>> getBalanceLog(@Query("id") Integer id, @Query("offset") Integer offset, @Query("count") Integer count);
 
-    @GET("/profile/log")
-    Call<> getBalanceLog(@Query("offset") Integer offset, @Query("count") Integer count);
+    @GET("/user/log")
+    Call<List<BalanceLog>> getBalanceLog(@Query("offset") Integer offset, @Query("count") Integer count);
 
     /*
     * Department
@@ -93,10 +112,24 @@ public interface RestInterface {
     * */
 
     @GET("/department")
-    Call<> getDepartment();
+    Call<Department> getDepartment();
 
     @GET("/department")
-    Call<> getDepartment(@Query("id") Integer id);
+    Call<Department> getDepartment(@Query("id") Integer id);
+
+    /*
+    * Таски
+    * ===============
+    * Список таски
+    *
+    * */
+
+    @GET("/tasks")
+    Call<List<Task>> getTasks();
+
+    @GET("/tasks")
+    Call<List<Task>> getTasks(@Query("offset") Integer offset, @Query("count") Integer count);
+
 
 
 }
