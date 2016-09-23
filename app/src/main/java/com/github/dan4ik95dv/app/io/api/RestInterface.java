@@ -86,9 +86,6 @@ public interface RestInterface {
     Call<List<Achievement>> getAchievements(@Query("id") Integer id);
 
     @GET("/user/achievements")
-    Call<List<Achievement>> getAchievements();
-
-    @GET("/user/achievements")
     Call<List<Achievement>> getAchievements(@Query("offset") Integer offset, @Query("count") Integer count);
 
     /*
@@ -97,9 +94,6 @@ public interface RestInterface {
     * История баланса
     *
     * */
-
-    @GET("/user/log")
-    Call<List<BalanceLog>> getBalanceLog();
 
     @GET("/user/log")
     Call<List<BalanceLog>> getBalanceLog(@Query("id") Integer id);
@@ -135,9 +129,6 @@ public interface RestInterface {
 
     @GET("/tasks")
     Call<List<Task>> getTasks(@Query("offset") Integer offset, @Query("count") Integer count);
-
-    @GET("/user/tasks")
-    Call<List<Task>> getUserTasks();
 
     @GET("/user/tasks")
     Call<List<Task>> getUserTasks(@Query("offset") Integer offset, @Query("count") Integer count);

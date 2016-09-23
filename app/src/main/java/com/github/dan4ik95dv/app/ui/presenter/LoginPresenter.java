@@ -24,8 +24,10 @@ public class LoginPresenter implements Presenter<LoginMvpView> {
 
     @Inject
     SharedPreferences sharedPreferences;
+
     @Inject
     RestInterface restInterface;
+
     @Inject
     Realm realm;
 
