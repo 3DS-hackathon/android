@@ -131,5 +131,4 @@ public interface RestInterface {
     Call<List<Task>> getTasks(@Query("offset") Integer offset, @Query("count") Integer count);
 
 
-
 }
