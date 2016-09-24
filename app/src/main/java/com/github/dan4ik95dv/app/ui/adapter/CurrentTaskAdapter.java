@@ -2,11 +2,12 @@ package com.github.dan4ik95dv.app.ui.adapter;
 
 import android.content.Context;
 import android.graphics.PorterDuff;
+import android.graphics.drawable.Drawable;
+import android.support.annotation.Nullable;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.AppCompatButton;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -26,12 +27,13 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import butterknife.OnClick;
 
 public class CurrentTaskAdapter extends RecyclerView.Adapter<CurrentTaskAdapter.BaseViewHolder> {
-    public static final int VIEW_TYPE_LOADING = 1;
+    public static final int VIEW_TYPE_LOADING = 2;
     private static final String TAG = "CurrentTaskAdapter";
     private static final int VIEW_TYPE_ITEM = 0;
+    private static final int VIEW_TYPE_ITEM_NO_IMAGE = 1;
+
     long lastErrorTime = 0;
     private OnLoadMoreListener mOnLoadMoreListener;
     private boolean isLoading;
@@ -91,17 +93,19 @@ public class CurrentTaskAdapter extends RecyclerView.Adapter<CurrentTaskAdapter.
 
     @Override
     public int getItemViewType(int position) {
-        return mTaskList.get(position) != null ? 0 : 1;
+        return mTaskList.get(position) != null ? mTaskList.get(position).getPic() != null ? VIEW_TYPE_ITEM : VIEW_TYPE_ITEM_NO_IMAGE : VIEW_TYPE_LOADING;
     }
 
     @Override
     public BaseViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         LayoutInflater inflater = LayoutInflater.from(parent.getContext());
-
-        if (viewType == VIEW_TYPE_ITEM) {
-            return new ViewHolder(inflater.inflate(R.layout.view_current_task, parent, false), mContext);
-        } else if (viewType == VIEW_TYPE_LOADING) {
-            return new LoadingViewHolder(inflater.inflate(R.layout.view_loading_item, parent, false), mContext);
+        switch (viewType) {
+            case VIEW_TYPE_ITEM:
+                return new ViewHolder(inflater.inflate(R.layout.view_current_task_with_image, parent, false), mContext);
+            case VIEW_TYPE_ITEM_NO_IMAGE:
+                return new ViewHolderNoImage(inflater.inflate(R.layout.view_current_task, parent, false), mContext);
+            case VIEW_TYPE_LOADING:
+                return new LoadingViewHolder(inflater.inflate(R.layout.view_loading_item, parent, false), mContext);
         }
         return null;
     }
@@ -167,8 +171,36 @@ public class CurrentTaskAdapter extends RecyclerView.Adapter<CurrentTaskAdapter.
         }
     }
 
+    class ViewHolder extends ViewHolderNoImage {
+        @Nullable
+        @BindView(R.id.logoTaskImageView)
+        ImageView logoTaskImageView;
+        Context context;
 
-    class ViewHolder extends BaseViewHolder {
+        public ViewHolder(View itemView, Context context) {
+            super(itemView, context);
+            this.context = context;
+            ButterKnife.bind(this, itemView);
+        }
+
+        @Override
+        public void bind(Task task) {
+            super.bind(task);
+            if (task.getPic() != null) {
+                Glide.with(context).load(task.getPic()).fitCenter().into(logoTaskImageView);
+            }
+        }
+
+        @Override
+        public void clear() {
+            super.clear();
+            if (logoTaskImageView != null) {
+                Glide.clear(logoTaskImageView);
+            }
+        }
+    }
+
+    class ViewHolderNoImage extends BaseViewHolder {
         @BindView(R.id.taskNameTextView)
         TextView taskNameTextView;
         @BindView(R.id.typeTaskTextView)
@@ -177,8 +209,7 @@ public class CurrentTaskAdapter extends RecyclerView.Adapter<CurrentTaskAdapter.
         TextView priceTaskTextView;
         @BindView(R.id.xpTaskTextView)
         TextView xpTaskTextView;
-        @BindView(R.id.logoTaskImageView)
-        ImageView logoTaskImageView;
+
         @BindView(R.id.userLevelProgressBar)
         ProgressBar userLevelProgressBar;
         @BindView(R.id.userLevelCountTextView)
@@ -193,7 +224,7 @@ public class CurrentTaskAdapter extends RecyclerView.Adapter<CurrentTaskAdapter.
 
         Context context;
 
-        public ViewHolder(View itemView, Context context) {
+        public ViewHolderNoImage(View itemView, Context context) {
             super(itemView);
             this.context = context;
             ButterKnife.bind(this, itemView);
@@ -208,9 +239,6 @@ public class CurrentTaskAdapter extends RecyclerView.Adapter<CurrentTaskAdapter.
                 typeTaskTextView.setText(task.getType() != null ? task.getType() : "");
                 priceTaskTextView.setText(task.getPrice() != null ? context.getString(R.string.balance, Utils.formatNumber(task.getPrice())) : "");
                 taskNameTextView.setText(task.getName() != null ? task.getName() : "");
-                if (task.getPic() != null) {
-                    Glide.with(context).load(task.getPic()).into(logoTaskImageView);
-                }
 
                 if (task.getStatus() != null) {
                     switch (task.getStatus()) {
@@ -223,13 +251,22 @@ public class CurrentTaskAdapter extends RecyclerView.Adapter<CurrentTaskAdapter.
                                         context.getString(R.string.user_level_count_text_view,
                                                 Utils.formatNumber(task.getProgressUser()),
                                                 Utils.formatNumber(task.getTotalCount())));
-                                userLevelProgressBar.setMax(task.getTotalCount());
 
+                                userLevelProgressBar.setProgress(0);
+
+//                                Drawable progressDrawable = ContextCompat.getDrawable(context,R.drawable.progress);
+//                                progressDrawable.setBounds(userLevelProgressBar.getProgressDrawable().getBounds());
+
+//                                userLevelProgressBar.setProgressDrawable(progressDrawable);
+//                                userLevelProgressBar.requestLayout();
                                 if (task.getProgressUser() != null)
                                     userLevelProgressBar.setProgress(task.getProgressUser());
 
-                                if (task.getProgress() != null)
+
+                                if (task.getProgress() != null) {
                                     userLevelProgressBar.setSecondaryProgress(task.getProgress());
+                                }
+                                userLevelProgressBar.setMax(task.getTotalCount());
                             }
                             break;
                         case "complete":
@@ -269,6 +306,7 @@ public class CurrentTaskAdapter extends RecyclerView.Adapter<CurrentTaskAdapter.
             if (completeLayoutCard != null) {
                 completeLayoutCard.setVisibility(View.GONE);
             }
+
         }
 
     }

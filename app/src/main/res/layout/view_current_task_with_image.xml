@@ -26,6 +26,32 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
 
+                <FrameLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <ImageView
+                        android:id="@+id/logoTaskImageView"
+                        android:layout_width="match_parent"
+                        android:layout_height="120dp" />
+
+                    <FrameLayout
+                        android:id="@+id/shadowsImageView"
+                        android:layout_width="match_parent"
+                        android:layout_height="120dp">
+
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:background="@drawable/scrim_top" />
+
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:background="@drawable/scrim_bottom" />
+                    </FrameLayout>
+                </FrameLayout>
+
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
@@ -38,7 +64,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_centerHorizontal="true"
-                        android:textColor="@android:color/black"
+                        android:textColor="@android:color/white"
                         tools:text="Бонус за продажу" />
 
                     <TextView
@@ -47,7 +73,7 @@
                         android:layout_height="wrap_content"
                         android:layout_centerHorizontal="true"
                         android:layout_marginBottom="8dp"
-                        android:textColor="@android:color/black"
+                        android:textColor="@android:color/white"
                         tools:text="Постоянный бонус" />
 
                     <LinearLayout
@@ -71,7 +97,7 @@
                             android:layout_height="wrap_content"
                             android:layout_gravity="bottom"
                             android:layout_marginRight="16dp"
-                            android:textColor="@android:color/black"
+                            android:textColor="@android:color/white"
                             tools:text="3 ฿" />
 
                         <ImageView
@@ -88,7 +114,7 @@
                             android:layout_height="wrap_content"
                             android:layout_gravity="bottom"
                             android:layout_marginRight="16dp"
-                            android:textColor="@android:color/black"
+                            android:textColor="@android:color/white"
                             tools:text="9 XP" />
                     </LinearLayout>
                 </LinearLayout>
@@ -111,10 +137,11 @@
 
                     <ImageView
                         android:id="@+id/completeHandImageView"
-                        android:layout_width="36dp"
+                        android:layout_width="48dp"
                         android:layout_height="48dp"
-                        android:layout_margin="48dp"
+                        android:layout_margin="8dp"
                         android:scaleType="matrix"
+                        android:layout_centerVertical="true"
                         android:src="@drawable/ic_thumb_up_48dp" />
 
                     <com.devspark.robototextview.widget.RobotoTextView
@@ -155,11 +182,11 @@
                     <ProgressBar
                         android:id="@+id/userLevelProgressBar"
                         style="?android:attr/progressBarStyleHorizontal"
+                        android:progressDrawable="@drawable/progress"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginBottom="4dp"
                         android:maxHeight="5dp"
-                        android:progressDrawable="@drawable/progress" />
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="4dp" />
 
                     <com.devspark.robototextview.widget.RobotoTextView
                         android:id="@+id/userLevelCountTextView"
@@ -168,7 +195,7 @@
                         android:layout_alignParentEnd="true"
                         android:layout_alignParentRight="true"
                         android:layout_gravity="start"
-                        android:textColor="@android:color/black"
+                        android:textColor="#757575"
                         app:typeface="roboto_regular"
                         tools:text="500,000 / 1,500,000" />
 

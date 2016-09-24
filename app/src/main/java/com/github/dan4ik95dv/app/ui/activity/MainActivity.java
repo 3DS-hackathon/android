@@ -1,11 +1,13 @@
 package com.github.dan4ik95dv.app.ui.activity;
 
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.design.widget.NavigationView;
 import android.support.design.widget.TabLayout;
+import android.support.v4.content.ContextCompat;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.view.ViewCompat;
 import android.support.v4.view.ViewPager;
@@ -196,6 +198,10 @@ public class MainActivity extends BaseActivity implements MainMvpView, ProfileMv
         }
 
         if (user.getLevel() != null) {
+//            Drawable progressDrawable = ContextCompat.getDrawable(this, R.drawable.progress);
+//            progressDrawable.setBounds(mUserLevelProgressBar.getProgressDrawable().getBounds());
+//            mUserLevelProgressBar.setProgressDrawable(progressDrawable);
+//            mUserLevelProgressBar.requestLayout();
             mUserLevelProgressBar.setProgress(user.getRating());
             mUserLevelProgressBar.setMax(user.getLevel().getEndCount());
             mUserLevelNameTextView.setText(user.getLevel().getName());

@@ -1,14 +1,17 @@
 package com.github.dan4ik95dv.app.ui.activity;
 
 import android.os.Bundle;
+import android.support.v7.widget.AppCompatEditText;
 import android.widget.Button;
-import android.widget.EditText;
+import android.widget.Toast;
 
 import com.github.dan4ik95dv.app.R;
 import com.github.dan4ik95dv.app.di.component.activity.DaggerLoginComponent;
 import com.github.dan4ik95dv.app.di.module.activity.LoginModule;
 import com.github.dan4ik95dv.app.ui.presenter.LoginPresenter;
 import com.github.dan4ik95dv.app.ui.view.LoginMvpView;
+import com.github.dan4ik95dv.app.util.AndroidUtils;
+import com.github.dan4ik95dv.app.util.Progress;
 
 import javax.inject.Inject;
 
@@ -20,11 +23,14 @@ public class LoginActivity extends BaseActivity implements LoginMvpView {
     @Inject
     LoginPresenter presenter;
 
+    @Inject
+    Progress progress;
+
     @BindView(R.id.emailEditText)
-    EditText emailEditText;
+    AppCompatEditText emailEditText;
 
     @BindView(R.id.passwordEditText)
-    EditText passwordEditText;
+    AppCompatEditText passwordEditText;
 
     @BindView(R.id.loginButton)
     Button loginButton;
@@ -32,8 +38,9 @@ public class LoginActivity extends BaseActivity implements LoginMvpView {
 
     @OnClick(R.id.loginButton)
     public void login() {
-        nextToMainActivity();
-//        mainPresenter.login(emailEditText.getText().toString(), passwordEditText.getText().toString());
+        progress.show();
+        AndroidUtils.hideKeyboard(this);
+        presenter.login(emailEditText.getText().toString(), passwordEditText.getText().toString());
     }
 
     @Override
@@ -48,6 +55,31 @@ public class LoginActivity extends BaseActivity implements LoginMvpView {
     @Override
     public void showError() {
         showErrorInternetDialog(this);
+    }
+
+    @Override
+    public void tokenError() {
+        progress.close();
+        Toast.makeText(this, R.string.incorrect_login_or_password, Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void tokenResponse() {
+        progress.close();
+    }
+
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        emailEditText.requestFocus();
+        AndroidUtils.showKeyboard(this, emailEditText);
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        AndroidUtils.hideKeyboard(this);
     }
 
     @Override

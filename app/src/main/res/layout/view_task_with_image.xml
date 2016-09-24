@@ -27,6 +27,32 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
 
+                <FrameLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <ImageView
+                        android:id="@+id/logoTaskImageView"
+                        android:layout_width="match_parent"
+                        android:layout_height="120dp" />
+
+                    <FrameLayout
+                        android:id="@+id/shadowsImageView"
+                        android:layout_width="match_parent"
+                        android:layout_height="120dp">
+
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:background="@drawable/scrim_top" />
+
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:background="@drawable/scrim_bottom" />
+                    </FrameLayout>
+                </FrameLayout>
+
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
@@ -39,7 +65,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_centerHorizontal="true"
-                        android:textColor="@android:color/black"
+                        android:textColor="@android:color/white"
                         tools:text="Бонус за продажу" />
 
                     <TextView
@@ -48,14 +74,14 @@
                         android:layout_height="wrap_content"
                         android:layout_centerHorizontal="true"
                         android:layout_marginBottom="8dp"
-                        android:textColor="@android:color/black"
+                        android:textColor="@android:color/white"
                         tools:text="Постоянный бонус" />
 
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:layout_gravity="bottom"
                         android:layout_marginTop="16dp"
+                        android:layout_gravity="bottom"
                         android:orientation="horizontal">
 
                         <ImageView
@@ -72,7 +98,7 @@
                             android:layout_height="wrap_content"
                             android:layout_gravity="bottom"
                             android:layout_marginRight="16dp"
-                            android:textColor="@android:color/black"
+                            android:textColor="@android:color/white"
                             tools:text="3 ฿" />
 
                         <ImageView
@@ -89,7 +115,7 @@
                             android:layout_height="wrap_content"
                             android:layout_gravity="bottom"
                             android:layout_marginRight="16dp"
-                            android:textColor="@android:color/black"
+                            android:textColor="@android:color/white"
                             tools:text="9 XP" />
                     </LinearLayout>
                 </LinearLayout>

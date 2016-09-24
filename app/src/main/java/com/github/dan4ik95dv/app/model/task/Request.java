@@ -10,8 +10,7 @@ import io.realm.annotations.PrimaryKey;
 
 
 public class Request extends RealmObject {
-    @SerializedName("delta_balance")
-    Integer deltaBalance;
+
     @SerializedName("status")
     String status;
     @SerializedName("type")
@@ -32,14 +31,6 @@ public class Request extends RealmObject {
 
     public void setId(int id) {
         this.id = id;
-    }
-
-    public Integer getDeltaBalance() {
-        return deltaBalance;
-    }
-
-    public void setDeltaBalance(Integer deltaBalance) {
-        this.deltaBalance = deltaBalance;
     }
 
     public String getStatus() {

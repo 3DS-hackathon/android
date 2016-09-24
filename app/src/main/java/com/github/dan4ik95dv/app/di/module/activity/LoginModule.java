@@ -4,6 +4,7 @@ import android.content.Context;
 
 import com.github.dan4ik95dv.app.di.scope.activity.LoginScope;
 import com.github.dan4ik95dv.app.ui.presenter.LoginPresenter;
+import com.github.dan4ik95dv.app.util.Progress;
 
 import dagger.Module;
 import dagger.Provides;
@@ -15,6 +16,11 @@ public class LoginModule {
 
     public LoginModule(Context context) {
         this.context = context;
+    }
+
+    @Provides
+    Progress provideProgress() {
+        return new Progress(context);
     }
 
     @Provides

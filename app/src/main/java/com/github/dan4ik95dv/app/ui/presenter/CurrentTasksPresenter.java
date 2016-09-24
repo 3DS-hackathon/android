@@ -7,15 +7,16 @@ import android.support.v7.widget.RecyclerView;
 import com.github.dan4ik95dv.app.application.App;
 import com.github.dan4ik95dv.app.model.task.Task;
 import com.github.dan4ik95dv.app.ui.activity.BaseActivity;
-import com.github.dan4ik95dv.app.ui.adapter.TaskAdapter;
+import com.github.dan4ik95dv.app.ui.adapter.CurrentTaskAdapter;
 import com.github.dan4ik95dv.app.ui.view.CurrentTasksMvpView;
+import com.github.dan4ik95dv.app.util.Utils;
 
 import java.util.ArrayList;
 import java.util.List;
 
 
 public class CurrentTasksPresenter implements Presenter<CurrentTasksMvpView> {
-    private TaskAdapter mTaskAdapter;
+    private CurrentTaskAdapter mTaskAdapter;
     private CurrentTasksMvpView currentTasksMvpView;
     RecyclerView.AdapterDataObserver mAdapterDataObserver = new RecyclerView.AdapterDataObserver() {
         @Override
@@ -44,15 +45,15 @@ public class CurrentTasksPresenter implements Presenter<CurrentTasksMvpView> {
         this.currentTasksMvpView = null;
     }
 
-    public TaskAdapter getAdapter() {
+    public CurrentTaskAdapter getAdapter() {
         return mTaskAdapter;
     }
 
 
     public void init() {
-        mTaskAdapter = new TaskAdapter(context, currentTasksMvpView.getTasksRecyclerView());
+        mTaskAdapter = new CurrentTaskAdapter(context, currentTasksMvpView.getTasksRecyclerView());
         mTaskAdapter.registerAdapterDataObserver(mAdapterDataObserver);
-        mTaskAdapter.setOnLoadMoreListener(new TaskAdapter.OnLoadMoreListener() {
+        mTaskAdapter.setOnLoadMoreListener(new CurrentTaskAdapter.OnLoadMoreListener() {
             @Override
             public void onLoadMore(int lastItem) {
                 if (lastItem > 0 && hasNext) {
@@ -84,11 +85,17 @@ public class CurrentTasksPresenter implements Presenter<CurrentTasksMvpView> {
     public void fillTasks() {
         List<Task> taskList = new ArrayList<>();
         for (int i = 0; i < 50; i++) {
+            String[] statuses = new String[]{"pending", "progress", "complete"};
             Task fixtureTask = new Task();
             fixtureTask.setDesc(String.valueOf(Math.random()));
             fixtureTask.setName(String.valueOf(Math.random()));
-            fixtureTask.setExperience(Integer.valueOf(String.valueOf(Math.round(Math.random()))));
-            fixtureTask.setPrice(Integer.valueOf(String.valueOf(Math.round(Math.random()))));
+            fixtureTask.setPic("https://unsplash.it/512/256/?random&r=" + String.valueOf(Math.random()));
+            fixtureTask.setExperience(Utils.randInt(0, 100000));
+            fixtureTask.setPrice(Utils.randInt(0, 100000));
+            fixtureTask.setStatus(statuses[Utils.randInt(0, 2)]);
+            fixtureTask.setProgressUser(Utils.randInt(0, 100));
+            fixtureTask.setProgress(Utils.randInt(0, 100));
+            fixtureTask.setTotalCount(100);
             fixtureTask.setType("fixed");
 
             taskList.add(fixtureTask);

@@ -7,7 +7,7 @@
     <color name="black_overlay">#66000000</color>
     <color name="navigation_view_background_selected">#F3F3F3</color>
     <color name="navigation_icon">#A7A7A7</color>
-
+    <color name="ripple_material">#402196f3</color>
     <color name="translucent_scrim_top">#7f000000</color>
     <color name="translucent_scrim_top_center">#3f000000</color>
     <color name="translucent_scrim_bottom">#2A000000</color>

@@ -11,6 +11,7 @@
     <string name="e_mail">E-mail</string>
     <string name="login">Login</string>
     <string name="password">Password</string>
+    <string name="connection">Соединение…</string>
     <string name="admin_mail_ru">admin@mail.ru</string>
     <string name="refill_title">Пополнение</string>
     <string name="my_quests_title">Мои квесты</string>
@@ -24,4 +25,7 @@
     <string name="close_title">Close</string>
     <string name="complete_text">Отлично! Задание выполнено</string>
     <string name="complete_text_desc">Вы будете вознаграждены сразу после проверки</string>
+    <string name="send">Отправить</string>
+    <string name="login_title">Вход</string>
+    <string name="incorrect_login_or_password">Неверный логин или пароль</string>
 </resources>

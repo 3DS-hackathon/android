@@ -2,21 +2,26 @@ package com.github.dan4ik95dv.app.io.api;
 
 import com.github.dan4ik95dv.app.model.Department;
 import com.github.dan4ik95dv.app.model.achievement.Achievement;
+import com.github.dan4ik95dv.app.model.achievement.AchievementsResponse;
 import com.github.dan4ik95dv.app.model.attachment.Attachment;
 import com.github.dan4ik95dv.app.model.balancelog.BalanceLog;
+import com.github.dan4ik95dv.app.model.balancelog.BalanceLogsResponse;
 import com.github.dan4ik95dv.app.model.task.Request;
 import com.github.dan4ik95dv.app.model.task.Task;
 import com.github.dan4ik95dv.app.model.task.TaskRequest;
+import com.github.dan4ik95dv.app.model.task.TasksResponse;
 import com.github.dan4ik95dv.app.model.user.LoginRequest;
 import com.github.dan4ik95dv.app.model.user.Token;
 import com.github.dan4ik95dv.app.model.user.User;
 
 import java.util.List;
 
+import io.realm.RealmList;
 import okhttp3.MultipartBody;
 import retrofit2.Call;
 import retrofit2.http.Body;
 import retrofit2.http.GET;
+import retrofit2.http.Header;
 import retrofit2.http.Multipart;
 import retrofit2.http.POST;
 import retrofit2.http.Part;
@@ -31,7 +36,7 @@ public interface RestInterface {
      *
      * */
 
-    @POST("/login")
+    @POST("login")
     Call<Token> login(@Body LoginRequest loginRequest);
 
     /*
@@ -42,8 +47,8 @@ public interface RestInterface {
      * */
 
     @Multipart
-    @POST("/attach")
-    Call<Attachment> upload(@Part MultipartBody.Part file);
+    @POST("attach")
+    Call<Attachment> upload(@Header("Authorization") String token, @Part MultipartBody.Part file);
 
     /*
      * Request task
@@ -52,8 +57,8 @@ public interface RestInterface {
      *
      * */
 
-    @POST("/request")
-    Call<Request> requestTask(@Body TaskRequest taskRequest);
+    @POST("request")
+    Call<Request> requestTask(@Header("Authorization") String token, @Body TaskRequest taskRequest);
 
 
    /*
@@ -63,10 +68,10 @@ public interface RestInterface {
     *
     * */
 
-    @GET("/user")
-    Call<User> getUser(@Query("id") Integer id);
+    @GET("user")
+    Call<User> getUser(@Header("Authorization") String token, @Query("id") Integer id);
 
-    @GET("/user")
+    @GET("user")
     Call<User> getUser();
 
 
@@ -79,14 +84,14 @@ public interface RestInterface {
     *
     * */
 
-    @GET("/user/achievements")
-    Call<List<Achievement>> getAchievements(@Query("id") Integer id, @Query("offset") Integer offset, @Query("count") Integer count);
+    @GET("user/achievements")
+    Call<AchievementsResponse> getAchievements(@Header("Authorization") String token, @Query("id") Integer id, @Query("offset") Integer offset, @Query("count") Integer count);
 
-    @GET("/user/achievements")
-    Call<List<Achievement>> getAchievements(@Query("id") Integer id);
+    @GET("user/achievements")
+    Call<AchievementsResponse> getAchievements(@Header("Authorization") String token, @Query("id") Integer id);
 
-    @GET("/user/achievements")
-    Call<List<Achievement>> getAchievements(@Query("offset") Integer offset, @Query("count") Integer count);
+    @GET("user/achievements")
+    Call<AchievementsResponse> getAchievements(@Header("Authorization") String token, @Query("offset") Integer offset, @Query("count") Integer count);
 
     /*
     * Balance Log
@@ -95,14 +100,14 @@ public interface RestInterface {
     *
     * */
 
-    @GET("/user/log")
-    Call<List<BalanceLog>> getBalanceLog(@Query("id") Integer id);
+    @GET("user/log")
+    Call<BalanceLogsResponse> getBalanceLog(@Header("Authorization") String token, @Query("id") Integer id);
 
-    @GET("/user/log")
-    Call<List<BalanceLog>> getBalanceLog(@Query("id") Integer id, @Query("offset") Integer offset, @Query("count") Integer count);
+    @GET("user/log")
+    Call<BalanceLogsResponse> getBalanceLog(@Header("Authorization") String token, @Query("id") Integer id, @Query("offset") Integer offset, @Query("count") Integer count);
 
-    @GET("/user/log")
-    Call<List<BalanceLog>> getBalanceLog(@Query("offset") Integer offset, @Query("count") Integer count);
+    @GET("user/log")
+    Call<BalanceLogsResponse> getBalanceLog(@Header("Authorization") String token, @Query("offset") Integer offset, @Query("count") Integer count);
 
     /*
     * Department
@@ -111,11 +116,11 @@ public interface RestInterface {
     *
     * */
 
-    @GET("/department")
-    Call<Department> getDepartment();
+    @GET("department")
+    Call<Department> getDepartment(@Header("Authorization") String token);
 
-    @GET("/department")
-    Call<Department> getDepartment(@Query("id") Integer id);
+    @GET("department")
+    Call<Department> getDepartment(@Header("Authorization") String token, @Query("id") Integer id);
 
     /*
     * Таски
@@ -124,14 +129,14 @@ public interface RestInterface {
     *
     * */
 
-    @GET("/tasks")
-    Call<List<Task>> getTasks();
+    @GET("tasks")
+    Call<TasksResponse> getTasks(@Header("Authorization") String token);
 
-    @GET("/tasks")
-    Call<List<Task>> getTasks(@Query("offset") Integer offset, @Query("count") Integer count);
+    @GET("tasks")
+    Call<TasksResponse> getTasks(@Header("Authorization") String token, @Query("offset") Integer offset, @Query("count") Integer count);
 
-    @GET("/user/tasks")
-    Call<List<Task>> getUserTasks(@Query("offset") Integer offset, @Query("count") Integer count);
+    @GET("user/tasks")
+    Call<TasksResponse> getUserTasks(@Header("Authorization") String token, @Query("offset") Integer offset, @Query("count") Integer count);
 
 
 }

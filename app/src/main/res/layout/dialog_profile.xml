@@ -81,13 +81,11 @@
 
             <ProgressBar
                 android:id="@+id/userLevelProgressBar"
-                style="@style/Widget.AppCompat.ProgressBar.Horizontal"
+                style="?android:attr/progressBarStyleHorizontal"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@id/userLevelNameTextView"
-                android:layout_marginBottom="4dp"
-                tools:max="100"
-                tools:progress="50" />
+                android:layout_marginBottom="4dp"/>
 
             <com.devspark.robototextview.widget.RobotoTextView
                 android:id="@+id/userLevelCountTextView"

@@ -27,6 +27,7 @@ public class LoginPresenter implements Presenter<LoginMvpView> {
     @Inject
     RestInterface restInterface;
 
+
     @Inject
     Realm realm;
 
@@ -37,6 +38,9 @@ public class LoginPresenter implements Presenter<LoginMvpView> {
         App.getInstance().getClientComponent().inject(this);
         this.loginActivity = (LoginActivity) context;
         attachView((LoginMvpView) context);
+        if (this.sharedPreferences.getString(Constants.Configs.TOKEN, null) != null)
+            loginActivity.nextToMainActivity();
+
     }
 
 
@@ -55,11 +59,13 @@ public class LoginPresenter implements Presenter<LoginMvpView> {
     }
 
     public void login(String email, String password) {
+
         restInterface.login(new LoginRequest(email, password)).enqueue(new Callback<Token>() {
             @Override
             public void onResponse(Call<Token> call, Response<Token> response) {
                 if (response.isSuccessful() && response.body() != null) {
                     sharedPreferences.edit().putString(Constants.Configs.TOKEN, response.body().getToken()).apply();
+                    loginMvpView.tokenResponse();
                     loginActivity.nextToMainActivity();
                 }
             }
@@ -67,7 +73,7 @@ public class LoginPresenter implements Presenter<LoginMvpView> {
             @Override
             public void onFailure(Call<Token> call, Throwable t) {
                 if (loginMvpView != null)
-                    loginMvpView.showError();
+                    loginMvpView.tokenError();
             }
         });
     }

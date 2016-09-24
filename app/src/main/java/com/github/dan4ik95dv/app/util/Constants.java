@@ -14,8 +14,8 @@ public class Constants {
 
         public static final String DEVICE_TYPE = "android";
         public final static String API_V1_VERSION = "v1";
-        public static final String API_URL = "http://localhost";
-        public static final String API_URL_DEV = "http://localhost";
+        public static final String API_URL = "http://s3d.daniil-r.ru/api/";
+        public static final String API_URL_DEV = "http://s3d.daniil-r.ru/api/";
 
         public static final String SERVICE_RECEIVER = "ApiServiceReceiver";
 
