@@ -85,7 +85,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@id/userLevelNameTextView"
-                android:layout_marginBottom="4dp"/>
+                android:layout_marginBottom="4dp" />
 
             <com.devspark.robototextview.widget.RobotoTextView
                 android:id="@+id/userLevelCountTextView"

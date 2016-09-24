@@ -20,6 +20,7 @@
     <string name="user_level_count_text_view" formatted="false">%s из %s XP</string>
     <string name="balance" formatted="false">%s ฿</string>
     <string name="xpa" formatted="false">%s XP</string>
+    <string name="balance_xpa" formatted="false">%s ฿  %s XP</string>
     <string name="add">Добавить</string>
     <string name="open_title">Open</string>
     <string name="close_title">Close</string>
@@ -34,4 +35,8 @@
     <string name="indefined">Неопределен</string>
     <string name="my_profile">Мой профиль</string>
     <string name="my_department">Моя команда</string>
+    <string name="join_task">Учавствовать</string>
+    <string name="add_sell">Добавить продажу</string>
+    <string name="alert_attach_info">Внимание! Для выполнения этого задания необходимо прикреплять фотографии.</string>
+    <string name="select_pic">Выберите изображение</string>
 </resources>

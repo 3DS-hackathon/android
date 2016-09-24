@@ -13,6 +13,7 @@ import android.widget.Toast;
 import com.github.dan4ik95dv.app.R;
 import com.github.dan4ik95dv.app.di.component.fragment.DaggerTasksComponent;
 import com.github.dan4ik95dv.app.di.module.fragment.TasksModule;
+import com.github.dan4ik95dv.app.model.task.Task;
 import com.github.dan4ik95dv.app.ui.activity.BaseActivity;
 import com.github.dan4ik95dv.app.ui.presenter.TasksPresenter;
 import com.github.dan4ik95dv.app.ui.view.TasksMvpView;
@@ -86,8 +87,9 @@ public class TasksFragment extends BaseFragment implements TasksMvpView {
                 .setOnItemClickListener(new ItemClickSupport.OnItemClickListener() {
                     @Override
                     public void onItemClicked(RecyclerView recyclerView, int position, View v) {
-
+                        presenter.showMoreTask(position);
                     }
+
                 });
         mSwipeContainer.setOnRefreshListener(presenter.getSwipeRefreshLayoutListener());
         mSwipeContainer.setColorSchemeResources(
@@ -106,7 +108,6 @@ public class TasksFragment extends BaseFragment implements TasksMvpView {
             presenter.getAdapter().notifyItemRemoved(presenter.getAdapter().getTaskList().size() - 1);
         }
     }
-
 
 
     @Override

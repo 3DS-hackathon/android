@@ -46,6 +46,20 @@ public class BaseActivity extends AppCompatActivity {
         AndroidUtils.startActivitySafe(this, new Intent(this, LoginActivity.class), R.string.error_unknown);
     }
 
+
+    public void showMoreTaskActivity(Integer taskId) {
+        Intent intent = new Intent(this, MoreTaskActivity.class);
+       intent.putExtra(Constants.TASK_ID, taskId);
+        AndroidUtils.startActivitySafe(this, intent, R.string.error_unknown);
+    }
+
+
+    public void showAddRequestTaskActivity(Integer taskId) {
+        Intent intent = new Intent(this, AddRequestActivity.class);
+        intent.putExtra(Constants.TASK_ID, taskId);
+        AndroidUtils.startActivitySafe(this, intent, R.string.error_unknown);
+    }
+
     public void nextToMainActivity(Bundle bundle) {
         Intent intent = new Intent(this, MainActivity.class);
         if (bundle != null) {

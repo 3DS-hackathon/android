@@ -3,7 +3,6 @@ package com.github.dan4ik95dv.app.ui.presenter;
 import android.content.Context;
 
 import com.github.dan4ik95dv.app.ui.view.RatingMvpView;
-import com.github.dan4ik95dv.app.ui.view.RatingMvpView;
 
 
 public class RatingPresenter implements Presenter<RatingMvpView> {
@@ -18,7 +17,6 @@ public class RatingPresenter implements Presenter<RatingMvpView> {
     public void attachView(RatingMvpView view) {
         this.ratingMvpView = view;
     }
-
 
 
     @Override

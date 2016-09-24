@@ -39,8 +39,6 @@ public class TasksPresenter implements Presenter<TasksMvpView> {
 
     private TaskAdapter mTaskAdapter;
     private TasksMvpView tasksMvpView;
-    private String token;
-
     RecyclerView.AdapterDataObserver mAdapterDataObserver = new RecyclerView.AdapterDataObserver() {
         @Override
         public void onChanged() {
@@ -48,7 +46,7 @@ public class TasksPresenter implements Presenter<TasksMvpView> {
             tasksMvpView.hideProgress();
         }
     };
-
+    private String token;
     private Context context;
     private BaseActivity activity;
     private Boolean hasNext = true;
@@ -96,6 +94,13 @@ public class TasksPresenter implements Presenter<TasksMvpView> {
             }
         });
         getTasks();
+    }
+
+    public void showMoreTask(int position) {
+        Task task = mTaskAdapter.getItem(position);
+        if (task != null) {
+            activity.showMoreTaskActivity(mTaskAdapter.getItem(position).getId());
+        }
     }
 
     public SwipeRefreshLayout.OnRefreshListener getSwipeRefreshLayoutListener() {

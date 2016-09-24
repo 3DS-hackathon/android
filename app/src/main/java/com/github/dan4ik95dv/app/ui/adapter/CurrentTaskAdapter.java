@@ -2,7 +2,6 @@ package com.github.dan4ik95dv.app.ui.adapter;
 
 import android.content.Context;
 import android.graphics.PorterDuff;
-import android.graphics.drawable.Drawable;
 import android.support.annotation.Nullable;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.AppCompatButton;
@@ -34,41 +33,14 @@ public class CurrentTaskAdapter extends RecyclerView.Adapter<CurrentTaskAdapter.
     private static final int VIEW_TYPE_ITEM = 0;
     private static final int VIEW_TYPE_ITEM_NO_IMAGE = 1;
 
-    long lastErrorTime = 0;
-    private OnLoadMoreListener mOnLoadMoreListener;
-    private boolean isLoading;
-    private int visibleThreshold = 5;
-    private int lastVisibleItem, totalItemCount;
     private Context mContext;
     private List<Task> mTaskList = new ArrayList<>();
-    private int lastId;
 
-    public CurrentTaskAdapter(Context mContext, RecyclerView recyclerView) {
+    public CurrentTaskAdapter(Context mContext) {
         this.mContext = mContext;
-        final LinearLayoutManager linearLayoutManager = (LinearLayoutManager) recyclerView.getLayoutManager();
-        recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
-            @Override
-            public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
-                super.onScrolled(recyclerView, dx, dy);
-                totalItemCount = linearLayoutManager.getItemCount();
-                lastVisibleItem = linearLayoutManager.findLastVisibleItemPosition();
-                if (!isLoading
-                        && lastErrorTime < System.currentTimeMillis() - 5000 || lastErrorTime == 0
-                        && totalItemCount <= (lastVisibleItem + visibleThreshold)
-                        && mTaskList != null
-                        && mTaskList.size() >= visibleThreshold
-                        && mOnLoadMoreListener != null) {
-                    lastErrorTime = System.currentTimeMillis();
-                    mOnLoadMoreListener.onLoadMore(lastVisibleItem);
-                    isLoading = true;
-                }
-            }
-        });
     }
 
-    public void setOnLoadMoreListener(OnLoadMoreListener mOnLoadMoreListener) {
-        this.mOnLoadMoreListener = mOnLoadMoreListener;
-    }
+
 
     public List<Task> getTaskList() {
         return mTaskList;
@@ -81,10 +53,6 @@ public class CurrentTaskAdapter extends RecyclerView.Adapter<CurrentTaskAdapter.
             mTaskList.add(task);
         }
         notifyDataSetChanged();
-    }
-
-    public Integer getLastItemId() {
-        return lastId;
     }
 
     public Task getItem(int position) {
@@ -128,14 +96,6 @@ public class CurrentTaskAdapter extends RecyclerView.Adapter<CurrentTaskAdapter.
     @Override
     public int getItemCount() {
         return mTaskList.size();
-    }
-
-    public void setLoaded() {
-        isLoading = false;
-    }
-
-    public interface OnLoadMoreListener {
-        void onLoadMore(int lastItem);
     }
 
     abstract class BaseViewHolder extends RecyclerView.ViewHolder {
@@ -187,7 +147,7 @@ public class CurrentTaskAdapter extends RecyclerView.Adapter<CurrentTaskAdapter.
         public void bind(Task task) {
             super.bind(task);
             if (task.getPic() != null) {
-                Glide.with(context).load(task.getPic()).fitCenter().into(logoTaskImageView);
+                Glide.with(context).load(task.getPic()).into(logoTaskImageView);
             }
         }
 
@@ -254,11 +214,6 @@ public class CurrentTaskAdapter extends RecyclerView.Adapter<CurrentTaskAdapter.
 
                                 userLevelProgressBar.setProgress(0);
 
-//                                Drawable progressDrawable = ContextCompat.getDrawable(context,R.drawable.progress);
-//                                progressDrawable.setBounds(userLevelProgressBar.getProgressDrawable().getBounds());
-
-//                                userLevelProgressBar.setProgressDrawable(progressDrawable);
-//                                userLevelProgressBar.requestLayout();
                                 if (task.getProgressUser() != null)
                                     userLevelProgressBar.setProgress(task.getProgressUser());
 

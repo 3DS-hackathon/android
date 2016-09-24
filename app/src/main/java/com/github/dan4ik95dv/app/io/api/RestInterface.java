@@ -1,10 +1,8 @@
 package com.github.dan4ik95dv.app.io.api;
 
 import com.github.dan4ik95dv.app.model.Department;
-import com.github.dan4ik95dv.app.model.achievement.Achievement;
 import com.github.dan4ik95dv.app.model.achievement.AchievementsResponse;
 import com.github.dan4ik95dv.app.model.attachment.Attachment;
-import com.github.dan4ik95dv.app.model.balancelog.BalanceLog;
 import com.github.dan4ik95dv.app.model.balancelog.BalanceLogsResponse;
 import com.github.dan4ik95dv.app.model.task.Request;
 import com.github.dan4ik95dv.app.model.task.Task;
@@ -14,9 +12,6 @@ import com.github.dan4ik95dv.app.model.user.LoginRequest;
 import com.github.dan4ik95dv.app.model.user.Token;
 import com.github.dan4ik95dv.app.model.user.User;
 
-import java.util.List;
-
-import io.realm.RealmList;
 import okhttp3.MultipartBody;
 import retrofit2.Call;
 import retrofit2.http.Body;
@@ -128,6 +123,9 @@ public interface RestInterface {
     * Список таски
     *
     * */
+
+    @GET("task")
+    Call<Task> joinTask(@Header("Authorization") String token, @Query("id") Integer id);
 
     @GET("tasks")
     Call<TasksResponse> getTasks(@Header("Authorization") String token);

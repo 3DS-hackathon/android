@@ -7,8 +7,6 @@ import android.support.v4.widget.SwipeRefreshLayout;
 import com.github.dan4ik95dv.app.application.App;
 import com.github.dan4ik95dv.app.io.api.ConnectionDetector;
 import com.github.dan4ik95dv.app.io.api.RestInterface;
-import com.github.dan4ik95dv.app.model.Department;
-import com.github.dan4ik95dv.app.model.user.Level;
 import com.github.dan4ik95dv.app.model.user.User;
 import com.github.dan4ik95dv.app.ui.activity.BaseActivity;
 import com.github.dan4ik95dv.app.ui.view.ProfileMvpView;
@@ -35,10 +33,8 @@ public class ProfilePresenter implements Presenter<ProfileMvpView> {
     ConnectionDetector connectionDetector;
     @Inject
     Realm realm;
-
-
-    private String token;
     BaseActivity activity;
+    private String token;
     private ProfileMvpView profileMvpView;
 
     public ProfilePresenter(Context context) {
@@ -82,7 +78,7 @@ public class ProfilePresenter implements Presenter<ProfileMvpView> {
         }
     }
 
-    private void updateUser() {
+    public void updateUser() {
         profileMvpView.showProgress();
         if (connectionDetector.isConnectingToInternet()) {
             restInterface.getUser(token).enqueue(new Callback<User>() {

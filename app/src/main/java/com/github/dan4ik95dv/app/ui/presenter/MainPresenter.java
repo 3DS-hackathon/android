@@ -5,17 +5,12 @@ import android.content.SharedPreferences;
 
 import com.github.dan4ik95dv.app.application.App;
 import com.github.dan4ik95dv.app.io.api.RestInterface;
-import com.github.dan4ik95dv.app.model.user.Level;
-import com.github.dan4ik95dv.app.model.user.User;
 import com.github.dan4ik95dv.app.ui.view.MainMvpView;
 import com.github.dan4ik95dv.app.util.Constants;
 
 import javax.inject.Inject;
 
 import io.realm.Realm;
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
 
 
 public class MainPresenter implements Presenter<MainMvpView> {

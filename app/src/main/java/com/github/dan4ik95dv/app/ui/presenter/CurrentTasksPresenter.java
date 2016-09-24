@@ -7,6 +7,7 @@ import android.support.v7.widget.RecyclerView;
 
 import com.github.dan4ik95dv.app.application.App;
 import com.github.dan4ik95dv.app.io.api.RestInterface;
+import com.github.dan4ik95dv.app.model.task.Task;
 import com.github.dan4ik95dv.app.model.task.TasksResponse;
 import com.github.dan4ik95dv.app.ui.activity.BaseActivity;
 import com.github.dan4ik95dv.app.ui.adapter.CurrentTaskAdapter;
@@ -72,9 +73,9 @@ public class CurrentTasksPresenter implements Presenter<CurrentTasksMvpView> {
 
 
     public void init() {
-        mTaskAdapter = new CurrentTaskAdapter(context, currentTasksMvpView.getTasksRecyclerView());
+        mTaskAdapter = new CurrentTaskAdapter(context);
         mTaskAdapter.registerAdapterDataObserver(mAdapterDataObserver);
-        
+
         getCurrentTasks();
     }
 
@@ -87,6 +88,12 @@ public class CurrentTasksPresenter implements Presenter<CurrentTasksMvpView> {
         };
     }
 
+    public void addRequest(int position) {
+        Task task = getAdapter().getItem(position);
+        if (task != null) {
+            activity.showAddRequestTaskActivity(task.getId());
+        }
+    }
 
     private void getCurrentTasks() {
         if (token != null) {

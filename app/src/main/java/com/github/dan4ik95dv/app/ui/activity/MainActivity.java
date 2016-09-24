@@ -14,6 +14,7 @@ import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
+import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ProgressBar;
@@ -131,7 +132,7 @@ public class MainActivity extends BaseActivity implements MainMvpView, ProfileMv
         setSupportActionBar(mToolbar);
 
         mAppBarLayout.addOnOffsetChangedListener(this);
-        mSwipeContainer.setOnRefreshListener(profilePresenter.getSwipeRefreshLayoutListener());
+        mSwipeContainer.setEnabled(false);
         mSwipeContainer.setColorSchemeResources(
                 R.color.colorPrimary,
                 R.color.colorPrimary,
@@ -182,33 +183,36 @@ public class MainActivity extends BaseActivity implements MainMvpView, ProfileMv
 
     @Override
     public void showError() {
-        if (mSwipeContainer != null) {
-            mSwipeContainer.setRefreshing(false);
-        }
+        swipeOff();
         showErrorInternetDialog(this);
     }
 
     @Override
     public void userError() {
-        if (mSwipeContainer != null) {
-            mSwipeContainer.setRefreshing(false);
-        }
+        swipeOff();
         Toast.makeText(this, R.string.incorrect_login_or_password, Toast.LENGTH_SHORT).show();
+    }
+
+    private void swipeOff() {
+        swipeOn(false);
     }
 
     @Override
     public void showProgress() {
+        swipeOn(true);
+    }
+
+    private void swipeOn(boolean refreshing) {
         if (mSwipeContainer != null) {
-            mSwipeContainer.setRefreshing(true);
+            mSwipeContainer.setRefreshing(refreshing);
+            mSwipeContainer.setEnabled(refreshing);
         }
     }
 
 
     @Override
     public void fillUserProfile(User user) {
-        if (mSwipeContainer != null) {
-            mSwipeContainer.setRefreshing(false);
-        }
+        swipeOff();
 
         Glide.with(this).load(user.getAvatar()).error(R.drawable.user).placeholder(R.drawable.user).into(mUserAvatarCircleImageView);
 
@@ -238,9 +242,9 @@ public class MainActivity extends BaseActivity implements MainMvpView, ProfileMv
     public void fillHeaderView(User user) {
 
         Glide.with(this).load(user.getAvatar()).error(R.drawable.user).placeholder(R.drawable.user).into(userAvatarCircleImageView);
+        String fullName = TextUtils.isEmpty(user.getFullName()) ? getString(R.string.anonim) : user.getFullName();
 
-        if (user.getFullName() != null)
-            userFullNameTextView.setText(user.getFullName());
+            userFullNameTextView.setText(fullName);
 
         if (user.getLevel() != null) {
             userLevelNameTextView.setText(user.getLevel().getName());
@@ -259,11 +263,21 @@ public class MainActivity extends BaseActivity implements MainMvpView, ProfileMv
 
     @Override
     public void onOffsetChanged(AppBarLayout appBarLayout, int verticalOffset) {
+    }
 
-        if (mCollapsingToolbarLayout.getHeight() + verticalOffset < 2 * ViewCompat.getMinimumHeight(mCollapsingToolbarLayout)) {
-            mSwipeContainer.setEnabled(false);
-        } else {
-            mSwipeContainer.setEnabled(true);
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.main, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.update_action:
+                profilePresenter.updateUser();
+            default:
+                return super.onOptionsItemSelected(item);
         }
     }
 

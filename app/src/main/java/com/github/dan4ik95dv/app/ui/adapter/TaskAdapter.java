@@ -26,8 +26,8 @@ import butterknife.ButterKnife;
 public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.BaseViewHolder> {
 
     public static final int VIEW_TYPE_LOADING = 2;
-    private static final int VIEW_TYPE_ITEM = 0;
     public static final int VIEW_TYPE_ITEM_NO_IMAGE = 1;
+    private static final int VIEW_TYPE_ITEM = 0;
     long lastErrorTime = 0;
     private OnLoadMoreListener mOnLoadMoreListener;
     private boolean isLoading;
@@ -68,16 +68,16 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.BaseViewHolder
         return mTaskList;
     }
 
-    public void addToTaskList(List<Task> taskList){
+    public void setTaskList(List<Task> taskList) {
+
+        this.mTaskList.clear();
         for (Task task : taskList) {
             mTaskList.add(task);
         }
         notifyDataSetChanged();
     }
 
-    public void setTaskList(List<Task> taskList) {
-
-        this.mTaskList.clear();
+    public void addToTaskList(List<Task> taskList) {
         for (Task task : taskList) {
             mTaskList.add(task);
         }

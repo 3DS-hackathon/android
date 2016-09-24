@@ -29,9 +29,9 @@
         <de.hdodenhof.circleimageview.CircleImageView
             android:id="@+id/userAvatarCircleHeaderImageView"
             layout_behavior="com.github.dan4ik95dv.app.ui.widget.AvatarImageBehavior"
-
             android:layout_width="46dp"
-            android:layout_height="46dp" />
+            android:layout_height="46dp"
+            android:src="@drawable/user" />
 
         <FrameLayout
             android:layout_width="wrap_content"

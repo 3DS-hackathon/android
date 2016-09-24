@@ -1,6 +1,5 @@
 package com.github.dan4ik95dv.app.model.task;
 
-import com.github.dan4ik95dv.app.model.balancelog.BalanceLog;
 import com.google.gson.annotations.SerializedName;
 
 import io.realm.RealmList;

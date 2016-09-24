@@ -7,6 +7,7 @@ public class Constants {
     public static final int SPLASH_DELAY = 3000;
     public static final int SHOW_TOAST_ERROR_INTERVAL = 5000;
     public static final int COUNT = 15;
+    public static final String TASK_ID = "taskId";
 
     public static class Api {
         public static final int CONNECT_TIMEOUT = 10;

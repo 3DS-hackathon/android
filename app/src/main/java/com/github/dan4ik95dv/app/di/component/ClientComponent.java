@@ -11,9 +11,11 @@ import com.github.dan4ik95dv.app.di.module.StorageModule;
 import com.github.dan4ik95dv.app.io.api.ConnectionDetector;
 import com.github.dan4ik95dv.app.io.api.RestInterface;
 import com.github.dan4ik95dv.app.ui.presenter.AchievementsPresenter;
+import com.github.dan4ik95dv.app.ui.presenter.AddRequestPresenter;
 import com.github.dan4ik95dv.app.ui.presenter.CurrentTasksPresenter;
 import com.github.dan4ik95dv.app.ui.presenter.LoginPresenter;
 import com.github.dan4ik95dv.app.ui.presenter.MainPresenter;
+import com.github.dan4ik95dv.app.ui.presenter.MoreTaskPresenter;
 import com.github.dan4ik95dv.app.ui.presenter.ProfilePresenter;
 import com.github.dan4ik95dv.app.ui.presenter.SplashPresenter;
 import com.github.dan4ik95dv.app.ui.presenter.TasksPresenter;
@@ -66,5 +68,9 @@ public interface ClientComponent {
     void inject(CurrentTasksPresenter presenter);
 
     void inject(AchievementsPresenter presenter);
+
+    void inject(MoreTaskPresenter presenter);
+
+    void inject(AddRequestPresenter presenter);
 
 }

@@ -13,6 +13,7 @@ import android.widget.Toast;
 import com.github.dan4ik95dv.app.R;
 import com.github.dan4ik95dv.app.di.component.fragment.DaggerCurrentTasksComponent;
 import com.github.dan4ik95dv.app.di.module.fragment.CurrentTasksModule;
+import com.github.dan4ik95dv.app.model.task.Task;
 import com.github.dan4ik95dv.app.ui.activity.BaseActivity;
 import com.github.dan4ik95dv.app.ui.presenter.CurrentTasksPresenter;
 import com.github.dan4ik95dv.app.ui.view.CurrentTasksMvpView;
@@ -86,8 +87,9 @@ public class CurrentTasksFragment extends BaseFragment implements CurrentTasksMv
                 .setOnItemClickListener(new ItemClickSupport.OnItemClickListener() {
                     @Override
                     public void onItemClicked(RecyclerView recyclerView, int position, View v) {
-
+                        presenter.addRequest(position);
                     }
+
                 });
         mSwipeContainer.setOnRefreshListener(presenter.getSwipeRefreshLayoutListener());
         mSwipeContainer.setColorSchemeResources(
@@ -97,9 +99,8 @@ public class CurrentTasksFragment extends BaseFragment implements CurrentTasksMv
     }
 
     private void hideProgressItem() {
-        if (mSwipeContainer != null) {
-            mSwipeContainer.setRefreshing(false);
-        }
+        hideProgress();
+
         if (presenter.getAdapter().getTaskList().size() > 0 &&
                 presenter.getAdapter().getTaskList().get(presenter.getAdapter().getTaskList().size() - 1) == null) {
             presenter.getAdapter().getTaskList().remove(presenter.getAdapter().getTaskList().size() - 1);
@@ -134,7 +135,9 @@ public class CurrentTasksFragment extends BaseFragment implements CurrentTasksMv
 
     @Override
     public void hideProgress() {
-
+        if (mSwipeContainer != null) {
+            mSwipeContainer.setRefreshing(false);
+        }
     }
 
 }
