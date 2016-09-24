@@ -8,4 +8,15 @@
     <string name="about_title">О программе</string>
     <string name="main_title">Главная</string>
     <string name="settings_title">Настройки</string>
+    <string name="e_mail">E-mail</string>
+    <string name="login">Login</string>
+    <string name="password">Password</string>
+    <string name="admin_mail_ru">admin@mail.ru</string>
+    <string name="refill_title">Пополнение</string>
+    <string name="my_quests_title">Мои квесты</string>
+    <string name="my_achievements_title">Награды</string>
+    <string name="level_format_header_view" formatted="false">%s • %d-й уровень</string>
+    <string name="user_level_count_text_view" formatted="false">%d / %d</string>
+    <string name="balance" formatted="false">%d ฿</string>
+    <string name="xpa" formatted="false">%d XP</string>
 </resources>

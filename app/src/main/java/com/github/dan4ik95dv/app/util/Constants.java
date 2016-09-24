@@ -5,6 +5,7 @@ public class Constants {
     public static final int SCHEMA_VERSION = 1;
     public static final String NAME_SCHEME = "app";
     public static final int SPLASH_DELAY = 3000;
+    public static final int SHOW_TOAST_ERROR_INTERVAL = 5000;
 
     public static class Api {
         public static final int CONNECT_TIMEOUT = 10;
@@ -13,8 +14,8 @@ public class Constants {
 
         public static final String DEVICE_TYPE = "android";
         public final static String API_V1_VERSION = "v1";
-        public static final String API_URL = "http://...";
-        public static final String API_URL_DEV = "http://...";
+        public static final String API_URL = "http://localhost";
+        public static final String API_URL_DEV = "http://localhost";
 
         public static final String SERVICE_RECEIVER = "ApiServiceReceiver";
 

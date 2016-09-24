@@ -22,6 +22,10 @@ public class Task extends RealmObject {
     String desc;
     @SerializedName("type")
     String type;
+    @SerializedName("experience")
+    Integer experience;
+    @SerializedName("price")
+    Integer price;
     @Index
     @PrimaryKey
     @SerializedName("id")
@@ -83,6 +87,22 @@ public class Task extends RealmObject {
 
     public void setType(String type) {
         this.type = type;
+    }
+
+    public Integer getExperience() {
+        return experience;
+    }
+
+    public void setExperience(Integer experience) {
+        this.experience = experience;
+    }
+
+    public Integer getPrice() {
+        return price;
+    }
+
+    public void setPrice(Integer price) {
+        this.price = price;
     }
 
     public RealmList<User> getUsers() {

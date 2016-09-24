@@ -10,7 +10,6 @@ import com.github.dan4ik95dv.app.model.user.Token;
 import com.github.dan4ik95dv.app.ui.activity.LoginActivity;
 import com.github.dan4ik95dv.app.ui.view.LoginMvpView;
 import com.github.dan4ik95dv.app.util.Constants;
-import com.google.android.gms.analytics.Tracker;
 
 import javax.inject.Inject;
 
