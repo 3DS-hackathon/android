@@ -7,8 +7,6 @@ import java.util.List;
 public class TaskRequest {
     @SerializedName("task_id")
     Integer taskId;
-    @SerializedName("type")
-    String type;
     @SerializedName("attachments")
     List<Integer> attachments;
 
@@ -18,14 +16,6 @@ public class TaskRequest {
 
     public void setTaskId(Integer taskId) {
         this.taskId = taskId;
-    }
-
-    public String getType() {
-        return type;
-    }
-
-    public void setType(String type) {
-        this.type = type;
     }
 
     public List<Integer> getAttachments() {

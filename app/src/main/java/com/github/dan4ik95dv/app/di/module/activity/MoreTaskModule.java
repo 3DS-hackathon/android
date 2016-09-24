@@ -5,6 +5,7 @@ import android.content.Context;
 import com.github.dan4ik95dv.app.di.scope.activity.MoreTaskScope;
 import com.github.dan4ik95dv.app.ui.presenter.MoreTaskPresenter;
 import com.github.dan4ik95dv.app.ui.presenter.SplashPresenter;
+import com.github.dan4ik95dv.app.util.Progress;
 
 import dagger.Module;
 import dagger.Provides;
@@ -16,6 +17,11 @@ public class MoreTaskModule {
 
     public MoreTaskModule(Context context) {
         this.context = context;
+    }
+
+    @Provides
+    public Progress provideProgress() {
+        return new Progress(context);
     }
 
     @Provides

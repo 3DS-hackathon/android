@@ -2,6 +2,7 @@ package com.github.dan4ik95dv.app.ui.activity;
 
 import android.os.Bundle;
 import android.support.v7.widget.AppCompatEditText;
+import android.text.TextUtils;
 import android.widget.Button;
 import android.widget.Toast;
 
@@ -38,9 +39,16 @@ public class LoginActivity extends BaseActivity implements LoginMvpView {
 
     @OnClick(R.id.loginButton)
     public void login() {
-        progress.show();
-        AndroidUtils.hideKeyboard(this);
-        presenter.login(emailEditText.getText().toString(), passwordEditText.getText().toString());
+        if (!TextUtils.isEmpty(emailEditText.getText().toString()) &&
+                !TextUtils.isEmpty(passwordEditText.getText().toString())
+                && passwordEditText.length() >= 5
+                && emailEditText.length() >= 5) {
+            progress.show();
+            AndroidUtils.hideKeyboard(this);
+            presenter.login(emailEditText.getText().toString(), passwordEditText.getText().toString());
+        } else {
+            Toast.makeText(this, R.string.fill_fileds_msg, Toast.LENGTH_SHORT).show();
+        }
     }
 
     @Override
@@ -54,6 +62,7 @@ public class LoginActivity extends BaseActivity implements LoginMvpView {
 
     @Override
     public void showError() {
+        progress.close();
         showErrorInternetDialog(this);
     }
 

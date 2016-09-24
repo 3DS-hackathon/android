@@ -1,21 +1,50 @@
 package com.github.dan4ik95dv.app.ui.presenter;
 
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.support.v4.widget.SwipeRefreshLayout;
 
 import com.github.dan4ik95dv.app.application.App;
+import com.github.dan4ik95dv.app.io.api.ConnectionDetector;
+import com.github.dan4ik95dv.app.io.api.RestInterface;
 import com.github.dan4ik95dv.app.model.Department;
 import com.github.dan4ik95dv.app.model.user.Level;
 import com.github.dan4ik95dv.app.model.user.User;
+import com.github.dan4ik95dv.app.ui.activity.BaseActivity;
 import com.github.dan4ik95dv.app.ui.view.ProfileMvpView;
+import com.github.dan4ik95dv.app.util.Constants;
+
+import javax.inject.Inject;
+
+import io.realm.Realm;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 
 public class ProfilePresenter implements Presenter<ProfileMvpView> {
 
+
+    @Inject
+    SharedPreferences sharedPreferences;
+
+    @Inject
+    RestInterface restInterface;
+
+    @Inject
+    ConnectionDetector connectionDetector;
+    @Inject
+    Realm realm;
+
+
+    private String token;
+    BaseActivity activity;
     private ProfileMvpView profileMvpView;
 
     public ProfilePresenter(Context context) {
         App.getInstance().getClientComponent().inject(this);
+        activity = (BaseActivity) context;
+        token = sharedPreferences.getString(Constants.Configs.TOKEN, null);
         attachView((ProfileMvpView) context);
 
     }
@@ -32,40 +61,56 @@ public class ProfilePresenter implements Presenter<ProfileMvpView> {
     }
 
     public void init() {
-        profileMvpView.fillUserProfile(getUserFixture());
+        updateUser();
     }
 
     public SwipeRefreshLayout.OnRefreshListener getSwipeRefreshLayoutListener() {
         return new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
-
+                updateUser();
             }
         };
     }
 
-    private User getUserFixture() {
-        User fixturaUser = new User();
-        Level fixturaLevel = new Level();
-        Department fixturaDepartment = new Department();
-        fixturaDepartment.setName("Отдел инновационных технологий");
-        fixturaDepartment.setId(1);
-        fixturaDepartment.setDesc("Очень очень секретный отдел");
-        fixturaDepartment.setRating(10);
-        fixturaLevel.setId(1);
-        fixturaLevel.setLevel(1);
-        fixturaLevel.setStartCount(0);
-        fixturaLevel.setEndCount(10);
-        fixturaUser.setBalance(1);
-        fixturaUser.setRating(5);
-        fixturaUser.setDepartment(fixturaDepartment);
-        fixturaLevel.setName("Новичок");
-        fixturaUser.setAvatar("https://cdn.zeplin.io/57e556f26282c2b426c815f7/assets/0DB324A9-C882-47F5-9E2F-2C515553D00F.png");
-        fixturaUser.setFullName("Пупкин Василий");
-        fixturaUser.setLevel(fixturaLevel);
 
-        return fixturaUser;
+    public void logout() {
+        profileMvpView.showProgress();
+        if (connectionDetector.isConnectingToInternet()) {
+            sharedPreferences.edit().remove(Constants.Configs.TOKEN).apply();
+            activity.nextToLoginActivity();
+        }
     }
 
+    private void updateUser() {
+        profileMvpView.showProgress();
+        if (connectionDetector.isConnectingToInternet()) {
+            restInterface.getUser(token).enqueue(new Callback<User>() {
+                @Override
+                public void onResponse(Call<User> call, Response<User> response) {
+                    if (response.isSuccessful()) {
+                        profileMvpView.fillUserProfile(response.body());
+                        profileMvpView.fillHeaderView(response.body());
+
+                        realm.insertOrUpdate(response.body());
+                    }
+                }
+
+                @Override
+                public void onFailure(Call<User> call, Throwable t) {
+                    if (profileMvpView != null) {
+                        profileMvpView.userError();
+                    }
+                }
+            });
+        } else {
+            User user = realm.where(User.class).findFirst();
+            if (user != null) {
+                profileMvpView.fillUserProfile(user);
+                profileMvpView.fillHeaderView(user);
+            }
+            profileMvpView.showError();
+        }
+    }
 
 }

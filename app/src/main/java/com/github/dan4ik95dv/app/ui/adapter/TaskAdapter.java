@@ -68,6 +68,13 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.BaseViewHolder
         return mTaskList;
     }
 
+    public void addToTaskList(List<Task> taskList){
+        for (Task task : taskList) {
+            mTaskList.add(task);
+        }
+        notifyDataSetChanged();
+    }
+
     public void setTaskList(List<Task> taskList) {
 
         this.mTaskList.clear();

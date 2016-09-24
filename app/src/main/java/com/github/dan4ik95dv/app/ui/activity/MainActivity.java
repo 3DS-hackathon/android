@@ -1,13 +1,11 @@
 package com.github.dan4ik95dv.app.ui.activity;
 
-import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.design.widget.NavigationView;
 import android.support.design.widget.TabLayout;
-import android.support.v4.content.ContextCompat;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.view.ViewCompat;
 import android.support.v4.view.ViewPager;
@@ -15,9 +13,11 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.widget.Toolbar;
+import android.text.TextUtils;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ProgressBar;
+import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.devspark.robototextview.widget.RobotoTextView;
@@ -182,36 +182,53 @@ public class MainActivity extends BaseActivity implements MainMvpView, ProfileMv
 
     @Override
     public void showError() {
-
+        if (mSwipeContainer != null) {
+            mSwipeContainer.setRefreshing(false);
+        }
+        showErrorInternetDialog(this);
     }
 
     @Override
+    public void userError() {
+        if (mSwipeContainer != null) {
+            mSwipeContainer.setRefreshing(false);
+        }
+        Toast.makeText(this, R.string.incorrect_login_or_password, Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void showProgress() {
+        if (mSwipeContainer != null) {
+            mSwipeContainer.setRefreshing(true);
+        }
+    }
+
+
+    @Override
     public void fillUserProfile(User user) {
-        if (user.getAvatar() != null)
-            Glide.with(this).load(user.getAvatar()).into(mUserAvatarCircleImageView);
+        if (mSwipeContainer != null) {
+            mSwipeContainer.setRefreshing(false);
+        }
+
+        Glide.with(this).load(user.getAvatar()).placeholder(R.drawable.user).into(mUserAvatarCircleImageView);
 
         if (user.getFullName() != null) {
-            mUserFullNameTextView.setText(user.getFullName());
-            mCollapsingToolbarLayout.setTitle(user.getFullName());
-            getSupportActionBar().setTitle(user.getFullName());
-            mToolbar.setTitle(user.getFullName());
+            String fullName = TextUtils.isEmpty(user.getFullName()) ? getString(R.string.anonim) : user.getFullName();
+            mUserFullNameTextView.setText(fullName);
+            mCollapsingToolbarLayout.setTitle(fullName);
+            getSupportActionBar().setTitle(fullName);
+            mToolbar.setTitle(fullName);
         }
 
         if (user.getLevel() != null) {
-//            Drawable progressDrawable = ContextCompat.getDrawable(this, R.drawable.progress);
-//            progressDrawable.setBounds(mUserLevelProgressBar.getProgressDrawable().getBounds());
-//            mUserLevelProgressBar.setProgressDrawable(progressDrawable);
-//            mUserLevelProgressBar.requestLayout();
             mUserLevelProgressBar.setProgress(user.getRating());
             mUserLevelProgressBar.setMax(user.getLevel().getEndCount());
             mUserLevelNameTextView.setText(user.getLevel().getName());
             mUserLevelTextView.setText(String.valueOf(user.getLevel().getLevel()));
-
             mUserLevelCountTextView.setText(getString(R.string.user_level_count_text_view, Utils.formatNumber(user.getRating()), Utils.formatNumber(user.getLevel().getEndCount())));
         }
 
-        if (user.getDepartment() != null)
-            mDepartmentNameTextView.setText(user.getDepartment().getName());
+        mDepartmentNameTextView.setText(user.getDepartment() != null ? user.getDepartment().getName() : getString(R.string.indefined));
 
         if (user.getBalance() != null)
             mBalanceCountTextView.setText(getString(R.string.balance, Utils.formatNumber(user.getBalance())));
@@ -219,17 +236,18 @@ public class MainActivity extends BaseActivity implements MainMvpView, ProfileMv
 
     @Override
     public void fillHeaderView(User user) {
-        if (user != null) {
-            Glide.with(this).load(user.getAvatar()).into(userAvatarCircleImageView);
-            if (user.getFullName() != null)
-                userFullNameTextView.setText(user.getFullName());
 
-            if (user.getLevel() != null) {
-                userLevelNameTextView.setText(user.getLevel().getName());
-                userLevelTextView.setText(String.valueOf(user.getLevel().getLevel()));
-            }
+        Glide.with(this).load(user.getAvatar()).placeholder(R.drawable.user).into(userAvatarCircleImageView);
+
+        if (user.getFullName() != null)
+            userFullNameTextView.setText(user.getFullName());
+
+        if (user.getLevel() != null) {
+            userLevelNameTextView.setText(user.getLevel().getName());
+            userLevelTextView.setText(String.valueOf(user.getLevel().getLevel()));
         }
     }
+
 
     @Override
     public void onDestroy() {
@@ -251,8 +269,13 @@ public class MainActivity extends BaseActivity implements MainMvpView, ProfileMv
 
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-        int id = item.getItemId();
-        // TODO: 24.09.2016 add option
+
+        switch (item.getItemId()) {
+            case R.id.action_logout:
+                profilePresenter.logout();
+                break;
+        }
+
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;

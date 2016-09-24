@@ -6,6 +6,7 @@ public class Constants {
     public static final String NAME_SCHEME = "app";
     public static final int SPLASH_DELAY = 3000;
     public static final int SHOW_TOAST_ERROR_INTERVAL = 5000;
+    public static final int COUNT = 15;
 
     public static class Api {
         public static final int CONNECT_TIMEOUT = 10;

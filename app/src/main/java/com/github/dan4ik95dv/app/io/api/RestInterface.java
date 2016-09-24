@@ -72,7 +72,7 @@ public interface RestInterface {
     Call<User> getUser(@Header("Authorization") String token, @Query("id") Integer id);
 
     @GET("user")
-    Call<User> getUser();
+    Call<User> getUser(@Header("Authorization") String token);
 
 
    /*

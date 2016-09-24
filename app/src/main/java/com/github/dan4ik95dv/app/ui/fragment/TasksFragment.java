@@ -104,9 +104,13 @@ public class TasksFragment extends BaseFragment implements TasksMvpView {
         }
     }
 
+
+
     @Override
     public void showError() {
-
+        if (mSwipeContainer != null) {
+            mSwipeContainer.setRefreshing(false);
+        }
         hideProgressItem();
 
         if (errorToast == null)
@@ -131,7 +135,10 @@ public class TasksFragment extends BaseFragment implements TasksMvpView {
 
     @Override
     public void hideProgress() {
-
+        if (mSwipeContainer != null) {
+            mSwipeContainer.setRefreshing(false);
+        }
+        hideProgressItem();
     }
 
 }

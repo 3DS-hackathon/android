@@ -28,4 +28,10 @@
     <string name="send">Отправить</string>
     <string name="login_title">Вход</string>
     <string name="incorrect_login_or_password">Неверный логин или пароль</string>
+    <string name="logout">Выйти</string>
+    <string name="fill_fileds_msg">Заполните поля!</string>
+    <string name="anonim">Anonim</string>
+    <string name="indefined">Indefined</string>
+    <string name="my_profile">Мой профиль</string>
+    <string name="my_department">Моя команда</string>
 </resources>
