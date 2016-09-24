@@ -2,19 +2,36 @@ package com.github.dan4ik95dv.app.ui.activity;
 
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.design.widget.AppBarLayout;
+import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.design.widget.NavigationView;
+import android.support.design.widget.TabLayout;
+import android.support.v4.view.GravityCompat;
+import android.support.v4.view.ViewCompat;
+import android.support.v4.view.ViewPager;
+import android.support.v4.widget.DrawerLayout;
+import android.support.v4.widget.SwipeRefreshLayout;
+import android.support.v7.app.ActionBarDrawerToggle;
+import android.support.v7.widget.Toolbar;
+import android.view.MenuItem;
 import android.view.View;
-import android.widget.FrameLayout;
-import android.widget.TextView;
+import android.widget.ProgressBar;
 
 import com.bumptech.glide.Glide;
+import com.devspark.robototextview.widget.RobotoTextView;
 import com.github.dan4ik95dv.app.R;
 import com.github.dan4ik95dv.app.di.component.activity.DaggerMainComponent;
 import com.github.dan4ik95dv.app.di.module.activity.MainModule;
 import com.github.dan4ik95dv.app.model.user.User;
+import com.github.dan4ik95dv.app.ui.adapter.ProfileViewPagerAdapter;
+import com.github.dan4ik95dv.app.ui.fragment.AchievementsFragment;
+import com.github.dan4ik95dv.app.ui.fragment.CurrentTasksFragment;
 import com.github.dan4ik95dv.app.ui.fragment.TasksFragment;
 import com.github.dan4ik95dv.app.ui.presenter.MainPresenter;
+import com.github.dan4ik95dv.app.ui.presenter.ProfilePresenter;
 import com.github.dan4ik95dv.app.ui.view.MainMvpView;
+import com.github.dan4ik95dv.app.ui.view.ProfileMvpView;
+import com.github.dan4ik95dv.app.util.Utils;
 
 import javax.inject.Inject;
 
@@ -22,39 +39,133 @@ import butterknife.BindView;
 import de.hdodenhof.circleimageview.CircleImageView;
 
 
-public class MainActivity extends BaseActivity implements MainMvpView {
+public class MainActivity extends BaseActivity implements MainMvpView, ProfileMvpView, AppBarLayout.OnOffsetChangedListener, NavigationView.OnNavigationItemSelectedListener {
 
     @Inject
-    MainPresenter presenter;
+    MainPresenter mainPresenter;
+    @Inject
+    ProfilePresenter profilePresenter;
 
-    @BindView(R.id.container)
-    FrameLayout container;
+    @BindView(R.id.appBarLayout)
+    AppBarLayout mAppBarLayout;
 
-    @BindView(R.id.navigation_view)
+    @BindView(R.id.drawer_layout)
+    DrawerLayout mDrawerLayout;
+
+    @BindView(R.id.navigationView)
     NavigationView mNavigationView;
+
+    @BindView(R.id.collapsingToolbarLayout)
+    CollapsingToolbarLayout mCollapsingToolbarLayout;
+
+    @BindView(R.id.toolbar)
+    Toolbar mToolbar;
+
+    @BindView(R.id.viewPager)
+    ViewPager mViewPager;
+
+    @BindView(R.id.tabLayout)
+    TabLayout mTabLayout;
+
+    @BindView(R.id.userAvatarCircleImageView)
+    CircleImageView mUserAvatarCircleImageView;
+
+    @BindView(R.id.userFullNameTextView)
+    RobotoTextView mUserFullNameTextView;
+
+    @BindView(R.id.userLevelNameTextView)
+    RobotoTextView mUserLevelNameTextView;
+
+    @BindView(R.id.userLevelProgressBar)
+    ProgressBar mUserLevelProgressBar;
+
+    @BindView(R.id.userLevelCountTextView)
+    RobotoTextView mUserLevelCountTextView;
+
+    @BindView(R.id.departmentNameTextView)
+    RobotoTextView mDepartmentNameTextView;
+
+    @BindView(R.id.balanceCountTextView)
+    RobotoTextView mBalanceCountTextView;
+
+    @BindView(R.id.userLevelTextView)
+    RobotoTextView mUserLevelTextView;
+
+    @BindView(R.id.swipeContainer)
+    SwipeRefreshLayout mSwipeContainer;
+
+    ProfileViewPagerAdapter mProfileViewPagerAdapter;
+
 
     View header;
     CircleImageView userAvatarCircleImageView;
-    TextView userFullNameTextView;
-    TextView userLevelTextView;
+    RobotoTextView userFullNameTextView;
+    RobotoTextView userLevelTextView;
+    RobotoTextView userLevelNameTextView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         DaggerMainComponent.builder().mainModule(new MainModule(this)).build().inject(this);
         setContentView(R.layout.activity_main);
-        initHeaderView();
-        presenter.init();
 
-        showFragment(TasksFragment.class, new Bundle());
+        initHeaderView();
+        initActionBar();
+        setupViewPager();
+        mainPresenter.init();
+        profilePresenter.init();
     }
 
     private void initHeaderView() {
         header = mNavigationView.getHeaderView(0);
         header.setOnClickListener(getHeaderClickListener());
-        userAvatarCircleImageView = (CircleImageView) header.findViewById(R.id.userAvatarCircleImageView);
-        userFullNameTextView = (TextView) header.findViewById(R.id.userFullNameTextView);
-        userLevelTextView = (TextView) header.findViewById(R.id.userLevelTextView);
+        userAvatarCircleImageView = (CircleImageView) header.findViewById(R.id.userAvatarCircleHeaderImageView);
+        userFullNameTextView = (RobotoTextView) header.findViewById(R.id.userFullNameHeaderTextView);
+        userLevelTextView = (RobotoTextView) header.findViewById(R.id.userLevelHeaderTextView);
+        userLevelNameTextView = (RobotoTextView) header.findViewById(R.id.userLevelNameHeaderTextView);
+    }
+
+    private void initActionBar() {
+        setSupportActionBar(mToolbar);
+
+        mAppBarLayout.addOnOffsetChangedListener(this);
+        mSwipeContainer.setOnRefreshListener(profilePresenter.getSwipeRefreshLayoutListener());
+        mSwipeContainer.setColorSchemeResources(
+                R.color.colorPrimary,
+                R.color.colorPrimary,
+                R.color.colorPrimary);
+        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
+                this, mDrawerLayout, mToolbar, R.string.open_title, R.string.close_title);
+        mDrawerLayout.addDrawerListener(toggle);
+        toggle.syncState();
+        mNavigationView.setNavigationItemSelectedListener(this);
+    }
+
+
+    private void setupViewPager() {
+        mProfileViewPagerAdapter = new ProfileViewPagerAdapter(getSupportFragmentManager());
+        mProfileViewPagerAdapter.addFragment(new TasksFragment(), getString(R.string.refill_title));
+        mProfileViewPagerAdapter.addFragment(new CurrentTasksFragment(), getString(R.string.my_quests_title));
+        mProfileViewPagerAdapter.addFragment(new AchievementsFragment(), getString(R.string.my_achievements_title));
+        mViewPager.setOffscreenPageLimit(3);
+        mViewPager.setAdapter(mProfileViewPagerAdapter);
+        mTabLayout.setupWithViewPager(mViewPager);
+    }
+
+    @Override
+    public void onBackPressed() {
+
+        if (mDrawerLayout.isDrawerOpen(GravityCompat.START)) {
+            mDrawerLayout.closeDrawer(GravityCompat.START);
+        } else {
+            super.onBackPressed();
+        }
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        mAppBarLayout.removeOnOffsetChangedListener(this);
     }
 
     @NonNull
@@ -62,7 +173,7 @@ public class MainActivity extends BaseActivity implements MainMvpView {
         return new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                nextToProfileActivity();
+
             }
         };
     }
@@ -73,15 +184,71 @@ public class MainActivity extends BaseActivity implements MainMvpView {
     }
 
     @Override
+    public void fillUserProfile(User user) {
+        if (user.getAvatar() != null)
+            Glide.with(this).load(user.getAvatar()).into(mUserAvatarCircleImageView);
+
+        if (user.getFullName() != null) {
+            mUserFullNameTextView.setText(user.getFullName());
+            mCollapsingToolbarLayout.setTitle(user.getFullName());
+            getSupportActionBar().setTitle(user.getFullName());
+            mToolbar.setTitle(user.getFullName());
+        }
+
+        if (user.getLevel() != null) {
+            mUserLevelProgressBar.setProgress(user.getRating());
+            mUserLevelProgressBar.setMax(user.getLevel().getEndCount());
+            mUserLevelNameTextView.setText(user.getLevel().getName());
+            mUserLevelTextView.setText(String.valueOf(user.getLevel().getLevel()));
+
+            mUserLevelCountTextView.setText(getString(R.string.user_level_count_text_view, Utils.formatNumber(user.getRating()), Utils.formatNumber(user.getLevel().getEndCount())));
+        }
+
+        if (user.getDepartment() != null)
+            mDepartmentNameTextView.setText(user.getDepartment().getName());
+
+        if (user.getBalance() != null)
+            mBalanceCountTextView.setText(getString(R.string.balance, Utils.formatNumber(user.getBalance())));
+    }
+
+    @Override
     public void fillHeaderView(User user) {
         if (user != null) {
             Glide.with(this).load(user.getAvatar()).into(userAvatarCircleImageView);
             if (user.getFullName() != null)
                 userFullNameTextView.setText(user.getFullName());
-            if (user.getLevel() != null)
-                userLevelTextView.setText(getString(R.string.level_format_header_view, user.getLevel().getName(), user.getLevel().getLevel()));
+
+            if (user.getLevel() != null) {
+                userLevelNameTextView.setText(user.getLevel().getName());
+                userLevelTextView.setText(String.valueOf(user.getLevel().getLevel()));
+            }
         }
     }
 
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        mainPresenter.detachView();
+        profilePresenter.detachView();
+    }
 
+
+    @Override
+    public void onOffsetChanged(AppBarLayout appBarLayout, int verticalOffset) {
+
+        if (mCollapsingToolbarLayout.getHeight() + verticalOffset < 2 * ViewCompat.getMinimumHeight(mCollapsingToolbarLayout)) {
+            mSwipeContainer.setEnabled(false);
+        } else {
+            mSwipeContainer.setEnabled(true);
+        }
+    }
+
+    @Override
+    public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+        int id = item.getItemId();
+        // TODO: 24.09.2016 add option
+        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        drawer.closeDrawer(GravityCompat.START);
+        return true;
+    }
 }

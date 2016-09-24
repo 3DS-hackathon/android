@@ -6,7 +6,6 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.widget.EditText;
@@ -41,9 +40,8 @@ public class BaseActivity extends AppCompatActivity {
     public void nextToMainActivity() {
         AndroidUtils.startActivitySafe(this, new Intent(this, MainActivity.class), R.string.error_unknown);
     }
-    public void nextToProfileActivity() {
-        AndroidUtils.startActivitySafe(this, new Intent(this, ProfileActivity.class), R.string.error_unknown);
-    }
+
+
     public void nextToLoginActivity() {
         AndroidUtils.startActivitySafe(this, new Intent(this, LoginActivity.class), R.string.error_unknown);
     }
@@ -57,17 +55,17 @@ public class BaseActivity extends AppCompatActivity {
     }
 
 
-    public void showFragment(Class fragmentClass, Bundle args) {
-        Fragment fragment = null;
-        try {
-            fragment = (Fragment) fragmentClass.newInstance();
-            fragment.setArguments(args);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-
-        getSupportFragmentManager().beginTransaction().replace(R.id.container, fragment).commit();
-    }
+//    public void showFragment(Class fragmentClass, Bundle args) {
+//        Fragment fragment = null;
+//        try {
+//            fragment = (Fragment) fragmentClass.newInstance();
+//            fragment.setArguments(args);
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//        }
+//
+//        getSupportFragmentManager().beginTransaction().replace(R.id.container, fragment).commit();
+//    }
 
 
     public void showErrorInternetDialog(Context context) {

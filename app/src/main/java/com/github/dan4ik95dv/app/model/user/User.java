@@ -1,8 +1,11 @@
 package com.github.dan4ik95dv.app.model.user;
 
 import com.github.dan4ik95dv.app.model.Department;
+import com.github.dan4ik95dv.app.model.achievement.Achievement;
+import com.github.dan4ik95dv.app.model.task.Task;
 import com.google.gson.annotations.SerializedName;
 
+import io.realm.RealmList;
 import io.realm.RealmObject;
 import io.realm.annotations.Index;
 import io.realm.annotations.PrimaryKey;
@@ -35,8 +38,33 @@ public class User extends RealmObject {
     @SerializedName("department")
     private Department department;
 
+    @SerializedName("rating")
+    private Integer rating;
+
     @SerializedName("level")
     private Level level;
+
+    @SerializedName("achievements")
+    private RealmList<Achievement> achievements;
+
+    @SerializedName("tasks")
+    private RealmList<Task> tasks;
+
+    public RealmList<Achievement> getAchievements() {
+        return achievements;
+    }
+
+    public void setAchievements(RealmList<Achievement> achievements) {
+        this.achievements = achievements;
+    }
+
+    public RealmList<Task> getTasks() {
+        return tasks;
+    }
+
+    public void setTasks(RealmList<Task> tasks) {
+        this.tasks = tasks;
+    }
 
     public int getId() {
         return id;
@@ -108,5 +136,13 @@ public class User extends RealmObject {
 
     public void setLevel(Level level) {
         this.level = level;
+    }
+
+    public Integer getRating() {
+        return rating;
+    }
+
+    public void setRating(Integer rating) {
+        this.rating = rating;
     }
 }

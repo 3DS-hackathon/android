@@ -14,6 +14,7 @@ public class Attachment extends RealmObject {
     String mimeType;
     @SerializedName("path")
     String path;
+
     @Index
     @PrimaryKey
     @SerializedName("id")

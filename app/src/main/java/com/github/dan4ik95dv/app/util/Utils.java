@@ -19,6 +19,7 @@ import java.io.OutputStream;
 import java.security.InvalidKeyException;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.text.DecimalFormat;
 import java.util.List;
 import java.util.Random;
 
@@ -32,6 +33,11 @@ public class Utils {
 
 
     private static final String TAG = Utils.class.getName();
+
+    public static String formatNumber(Integer number) {
+        DecimalFormat formatter = new DecimalFormat("#,###,###");
+        return formatter.format(number);
+    }
 
     public static Object loadObject(Context context, String fileName) {
         File file = new File(context.getCacheDir(), fileName);

@@ -18,6 +18,7 @@ public class Department extends RealmObject {
     String name;
     @SerializedName("rating")
     Integer rating;
+
     @Index
     @PrimaryKey
     @SerializedName("id")

@@ -10,12 +10,15 @@ import io.realm.annotations.PrimaryKey;
 
 
 public class Request extends RealmObject {
-    @SerializedName("delta_count")
-    Integer deltaCount;
+    @SerializedName("delta_balance")
+    Integer deltaBalance;
     @SerializedName("status")
     String status;
     @SerializedName("type")
     String type;
+
+    @SerializedName("task")
+    Task task;
     @SerializedName("attachments")
     RealmList<Attachment> attachments;
     @Index
@@ -31,12 +34,12 @@ public class Request extends RealmObject {
         this.id = id;
     }
 
-    public Integer getDeltaCount() {
-        return deltaCount;
+    public Integer getDeltaBalance() {
+        return deltaBalance;
     }
 
-    public void setDeltaCount(Integer deltaCount) {
-        this.deltaCount = deltaCount;
+    public void setDeltaBalance(Integer deltaBalance) {
+        this.deltaBalance = deltaBalance;
     }
 
     public String getStatus() {
@@ -45,6 +48,14 @@ public class Request extends RealmObject {
 
     public void setStatus(String status) {
         this.status = status;
+    }
+
+    public Task getTask() {
+        return task;
+    }
+
+    public void setTask(Task task) {
+        this.task = task;
     }
 
     public String getType() {

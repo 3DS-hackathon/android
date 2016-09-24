@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/header_sidemenu"
     android:layout_width="match_parent"
-    android:layout_height="72dp"
+    android:layout_height="92dp"
     android:layout_alignParentLeft="true"
     android:layout_alignParentStart="true"
     android:layout_centerVertical="true"
@@ -13,44 +14,75 @@
     android:paddingTop="4dp">
 
 
-    <de.hdodenhof.circleimageview.CircleImageView
-        android:id="@+id/userAvatarCircleImageView"
-        layout_behavior="com.github.dan4ik95dv.app.ui.widget.AvatarImageBehavior"
+    <FrameLayout
+        android:id="@+id/userAvatarHeaderLayout"
         android:layout_width="48dp"
         android:layout_height="48dp"
-        android:layout_marginLeft="16dp"
-        android:layout_marginStart="16dp"
-        android:layout_marginRight="16dp"
-        android:layout_marginEnd="16dp"
-        android:layout_centerVertical="true"
         android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true" />
+        android:layout_alignParentStart="true"
+        android:layout_centerVertical="true"
+        android:layout_marginEnd="16dp"
+        android:layout_marginLeft="16dp"
+        android:layout_marginRight="16dp"
+        android:layout_marginStart="16dp">
+
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/userAvatarCircleHeaderImageView"
+            layout_behavior="com.github.dan4ik95dv.app.ui.widget.AvatarImageBehavior"
+
+            android:layout_width="46dp"
+            android:layout_height="46dp" />
+
+        <FrameLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom|end">
+
+            <ImageView
+                android:layout_width="16dp"
+                android:layout_height="16dp"
+                android:src="@drawable/ic_polygon" />
+
+            <com.devspark.robototextview.widget.RobotoTextView
+                android:id="@+id/userLevelHeaderTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:textColor="@android:color/white"
+                android:textSize="12sp"
+                app:typeface="roboto_medium"
+                tools:text="1" />
+        </FrameLayout>
+
+
+    </FrameLayout>
 
     <LinearLayout
-        android:id="@+id/userProfileLayout"
+        android:id="@+id/userProfileHeaderLayout"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_marginTop="8dp"
-        android:layout_marginLeft="8dp"
-        android:layout_marginRight="8dp"
-        android:orientation="vertical"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true"
-        android:layout_toRightOf="@+id/userAvatarCircleImageView"
-        android:layout_toEndOf="@+id/userAvatarCircleImageView">
-        <TextView
-            android:id="@+id/userFullNameTextView"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/userAvatarHeaderLayout"
+        android:layout_toEndOf="@+id/userAvatarHeaderLayout"
+        android:layout_toRightOf="@+id/userAvatarHeaderLayout"
+        android:orientation="vertical">
+
+        <com.devspark.robototextview.widget.RobotoTextView
+            android:id="@+id/userFullNameHeaderTextView"
             style="@style/TextAppearance.AppCompat.Medium"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="8dp"
+            android:textColor="@android:color/white"
+            app:typeface="roboto_medium"
             tools:text="Даниил Луговской" />
 
-        <TextView
-            android:id="@+id/userLevelTextView"
+        <com.devspark.robototextview.widget.RobotoTextView
+            android:id="@+id/userLevelNameHeaderTextView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            tools:text="Сверхчеловек • 1-й уровень" />
+            android:layout_marginBottom="8dp"
+            android:maxLines="1"
+            android:textColor="@android:color/white"
+            app:typeface="roboto_medium"
+            tools:text="Сверхчеловек" />
     </LinearLayout>
 </RelativeLayout>

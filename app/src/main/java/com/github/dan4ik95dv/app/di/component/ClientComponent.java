@@ -10,8 +10,8 @@ import com.github.dan4ik95dv.app.di.module.NetModule;
 import com.github.dan4ik95dv.app.di.module.StorageModule;
 import com.github.dan4ik95dv.app.io.api.ConnectionDetector;
 import com.github.dan4ik95dv.app.io.api.RestInterface;
-import com.github.dan4ik95dv.app.model.achievement.Achievement;
 import com.github.dan4ik95dv.app.ui.presenter.AchievementsPresenter;
+import com.github.dan4ik95dv.app.ui.presenter.CurrentTasksPresenter;
 import com.github.dan4ik95dv.app.ui.presenter.LoginPresenter;
 import com.github.dan4ik95dv.app.ui.presenter.MainPresenter;
 import com.github.dan4ik95dv.app.ui.presenter.ProfilePresenter;
@@ -62,6 +62,8 @@ public interface ClientComponent {
     void inject(ProfilePresenter presenter);
 
     void inject(TasksPresenter presenter);
+
+    void inject(CurrentTasksPresenter presenter);
 
     void inject(AchievementsPresenter presenter);
 

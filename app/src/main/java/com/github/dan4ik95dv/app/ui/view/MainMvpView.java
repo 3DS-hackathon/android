@@ -6,4 +6,6 @@ public interface MainMvpView extends MvpView {
     void showError();
 
     void fillHeaderView(User user);
+
+
 }

@@ -1,0 +1,176 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <android.support.v7.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:cardBackgroundColor="@color/colorPrimary"
+        app:cardCornerRadius="5dp">
+
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="16dp">
+
+            <FrameLayout
+                android:id="@+id/userAvatarLayout"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentTop="true"
+                android:layout_centerHorizontal="true"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginBottom="4dp">
+
+                <de.hdodenhof.circleimageview.CircleImageView
+                    android:id="@+id/userAvatarCircleImageView"
+                    layout_behavior="com.github.dan4ik95dv.app.ui.widget.AvatarImageBehavior"
+                    android:layout_width="96dp"
+                    android:layout_height="96dp" />
+
+                <FrameLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="bottom|end">
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/ic_polygon" />
+
+                    <com.devspark.robototextview.widget.RobotoTextView
+                        android:id="@+id/userLevelTextView"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:textColor="@android:color/white"
+                        android:textSize="14sp"
+                        app:typeface="roboto_medium"
+                        tools:text="1" />
+                </FrameLayout>
+
+
+            </FrameLayout>
+
+            <com.devspark.robototextview.widget.RobotoTextView
+                android:id="@+id/userFullNameTextView"
+                style="@style/TextAppearance.AppCompat.Medium"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/userAvatarLayout"
+                android:layout_centerHorizontal="true"
+                android:textColor="@android:color/white"
+                app:typeface="roboto_medium"
+                tools:text="Даниил Луговской" />
+
+            <com.devspark.robototextview.widget.RobotoTextView
+                android:id="@+id/userLevelNameTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/userFullNameTextView"
+                android:layout_centerHorizontal="true"
+                android:layout_marginBottom="8dp"
+                android:maxLines="1"
+                android:textColor="@android:color/white"
+                app:typeface="roboto_medium"
+                tools:text="Сверхчеловек" />
+
+            <ProgressBar
+                android:id="@+id/userLevelProgressBar"
+                style="@style/Widget.AppCompat.ProgressBar.Horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/userLevelNameTextView"
+                android:layout_marginBottom="4dp"
+                tools:max="100"
+                tools:progress="50" />
+
+            <com.devspark.robototextview.widget.RobotoTextView
+                android:id="@+id/userLevelCountTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentRight="true"
+                android:layout_below="@+id/userLevelProgressBar"
+                android:textColor="@android:color/white"
+                app:typeface="roboto_medium"
+                tools:text="500,000 / 1,500,000" />
+
+            <LinearLayout
+                android:id="@+id/departmentLayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/userLevelCountTextView"
+                android:layout_marginBottom="8dp"
+                android:orientation="horizontal">
+
+                <ImageView
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:layout_marginEnd="8dp"
+                    android:layout_marginRight="8dp"
+                    android:contentDescription=""
+                    android:src="@drawable/ic_group_white_24dp"
+                    tools:ignore="ContentDescription" />
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <com.devspark.robototextview.widget.RobotoTextView
+                        android:id="@+id/departmentNameTextView"
+                        style="@style/TextAppearance.AppCompat.Medium"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:ellipsize="end"
+                        android:maxLines="1"
+                        android:textColor="@android:color/white"
+                        app:typeface="roboto_medium"
+                        tools:text="Чуркинские поцики" />
+
+                    <com.devspark.robototextview.widget.RobotoTextView
+                        android:id="@+id/departmentTextView"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textColor="@android:color/white"
+                        app:typeface="roboto_medium"
+                        tools:text="Команда" />
+                </LinearLayout>
+
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/balanceLayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/departmentLayout"
+                android:layout_marginBottom="16dp"
+                android:orientation="horizontal">
+
+                <ImageView
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:layout_marginEnd="8dp"
+                    android:layout_marginRight="8dp"
+                    android:contentDescription=""
+                    android:src="@drawable/ic_account_balance_wallet_white_24dp"
+                    tools:ignore="ContentDescription" />
+
+                <com.devspark.robototextview.widget.RobotoTextView
+                    android:id="@+id/balanceCountTextView"
+                    style="@style/TextAppearance.AppCompat.Medium"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:textColor="@android:color/white"
+                    app:typeface="roboto_medium"
+                    tools:text="4,000,000 ฿" />
+            </LinearLayout>
+        </RelativeLayout>
+    </android.support.v7.widget.CardView>
+</FrameLayout>

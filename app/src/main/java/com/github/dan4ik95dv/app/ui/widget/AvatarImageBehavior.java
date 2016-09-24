@@ -30,6 +30,7 @@ public class AvatarImageBehavior extends CoordinatorLayout.Behavior {
     private int mFinalHeight;
     private int mStartHeight;
     private int mFinalXPosition;
+
     public AvatarImageBehavior(Context context, AttributeSet attrs) {
         mContext = context;
         init();

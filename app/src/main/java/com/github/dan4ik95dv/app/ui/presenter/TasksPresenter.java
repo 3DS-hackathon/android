@@ -1,6 +1,7 @@
 package com.github.dan4ik95dv.app.ui.presenter;
 
 import android.content.Context;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.RecyclerView;
 
 import com.github.dan4ik95dv.app.application.App;
@@ -16,6 +17,13 @@ import java.util.List;
 public class TasksPresenter implements Presenter<TasksMvpView> {
     private TaskAdapter mTaskAdapter;
     private TasksMvpView tasksMvpView;
+    RecyclerView.AdapterDataObserver mAdapterDataObserver = new RecyclerView.AdapterDataObserver() {
+        @Override
+        public void onChanged() {
+            super.onChanged();
+            tasksMvpView.hideProgress();
+        }
+    };
     private Context context;
     private BaseActivity activity;
     private Boolean hasNext = true;
@@ -25,14 +33,6 @@ public class TasksPresenter implements Presenter<TasksMvpView> {
         this.activity = (BaseActivity) context;
         App.getInstance().getClientComponent().inject(this);
     }
-
-    RecyclerView.AdapterDataObserver mAdapterDataObserver = new RecyclerView.AdapterDataObserver() {
-        @Override
-        public void onChanged() {
-            super.onChanged();
-            tasksMvpView.hideProgress();
-        }
-    };
 
     @Override
     public void attachView(TasksMvpView view) {
@@ -69,6 +69,15 @@ public class TasksPresenter implements Presenter<TasksMvpView> {
             }
         });
         fillTasks();
+    }
+
+    public SwipeRefreshLayout.OnRefreshListener getSwipeRefreshLayoutListener() {
+        return new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+
+            }
+        };
     }
 
 

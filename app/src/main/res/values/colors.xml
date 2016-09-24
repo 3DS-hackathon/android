@@ -1,10 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#3F51B5</color>
+    <color name="colorPrimary">#2196f3</color>
     <color name="colorPrimaryDark">#2196f3</color>
-    <color name="colorAccent">#FF4081</color>
+    <color name="colorAccent">#ff9800</color>
     <color name="background">#FFFFFFFF</color>
     <color name="black_overlay">#66000000</color>
     <color name="navigation_view_background_selected">#F3F3F3</color>
     <color name="navigation_icon">#A7A7A7</color>
+
+    <color name="translucent_scrim_top">#7f000000</color>
+    <color name="translucent_scrim_top_center">#3f000000</color>
+    <color name="translucent_scrim_bottom">#2A000000</color>
+    <color name="translucent_scrim_bottom_center">#0D000000</color>
 </resources>

@@ -16,6 +16,8 @@ public class Task extends RealmObject {
     Integer progressUser;
     @SerializedName("total_count")
     Integer totalCount;
+    @SerializedName("status")
+    String status;
     @SerializedName("name")
     String name;
     @SerializedName("desc")
@@ -26,12 +28,31 @@ public class Task extends RealmObject {
     Integer experience;
     @SerializedName("price")
     Integer price;
+    @SerializedName("pic")
+    String pic;
+
     @Index
     @PrimaryKey
     @SerializedName("id")
     private int id;
     @SerializedName("users")
     private RealmList<User> users;
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
+
+    public String getPic() {
+        return pic;
+    }
+
+    public void setPic(String pic) {
+        this.pic = pic;
+    }
 
     public int getId() {
         return id;

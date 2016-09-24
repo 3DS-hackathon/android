@@ -1,6 +1,7 @@
 package com.github.dan4ik95dv.app.ui.presenter;
 
 import android.content.Context;
+import android.support.v4.widget.SwipeRefreshLayout;
 
 import com.github.dan4ik95dv.app.application.App;
 import com.github.dan4ik95dv.app.model.Department;
@@ -34,6 +35,15 @@ public class ProfilePresenter implements Presenter<ProfileMvpView> {
         profileMvpView.fillUserProfile(getUserFixture());
     }
 
+    public SwipeRefreshLayout.OnRefreshListener getSwipeRefreshLayoutListener() {
+        return new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+
+            }
+        };
+    }
+
     private User getUserFixture() {
         User fixturaUser = new User();
         Level fixturaLevel = new Level();
@@ -46,7 +56,8 @@ public class ProfilePresenter implements Presenter<ProfileMvpView> {
         fixturaLevel.setLevel(1);
         fixturaLevel.setStartCount(0);
         fixturaLevel.setEndCount(10);
-        fixturaUser.setBalance(100);
+        fixturaUser.setBalance(1);
+        fixturaUser.setRating(5);
         fixturaUser.setDepartment(fixturaDepartment);
         fixturaLevel.setName("Новичок");
         fixturaUser.setAvatar("https://cdn.zeplin.io/57e556f26282c2b426c815f7/assets/0DB324A9-C882-47F5-9E2F-2C515553D00F.png");

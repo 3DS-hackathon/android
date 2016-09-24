@@ -1,0 +1,214 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <android.support.v7.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
+        android:layout_marginLeft="16dp"
+        android:layout_marginRight="16dp"
+        android:layout_marginTop="8dp"
+        android:foreground="?attr/selectableItemBackground"
+        app:cardBackgroundColor="@android:color/white"
+        app:cardUseCompatPadding="false">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <FrameLayout
+                android:id="@+id/cardInfo"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <FrameLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <ImageView
+                        android:id="@+id/logoTaskImageView"
+                        android:layout_width="match_parent"
+                        android:layout_height="120dp" />
+
+                    <FrameLayout
+                        android:id="@+id/shadowsImageView"
+                        android:layout_width="match_parent"
+                        android:layout_height="120dp">
+
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:background="@drawable/scrim_top" />
+
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:background="@drawable/scrim_bottom" />
+                    </FrameLayout>
+                </FrameLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_margin="16dp"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/taskNameTextView"
+                        style="@style/TextAppearance.AppCompat.Medium"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerHorizontal="true"
+                        android:textColor="@android:color/white"
+                        tools:text="Бонус за продажу" />
+
+                    <TextView
+                        android:id="@+id/typeTaskTextView"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerHorizontal="true"
+                        android:layout_marginBottom="8dp"
+                        android:textColor="@android:color/white"
+                        tools:text="Постоянный бонус" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_gravity="bottom"
+                        android:orientation="horizontal">
+
+                        <ImageView
+                            android:layout_width="16dp"
+                            android:layout_height="16dp"
+                            android:layout_gravity="bottom"
+                            android:layout_marginRight="4dp"
+                            android:contentDescription=""
+                            android:src="@drawable/ic_plus_copy_2" />
+
+                        <TextView
+                            android:id="@+id/priceTaskTextView"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="bottom"
+                            android:layout_marginRight="16dp"
+                            android:textColor="@android:color/white"
+                            tools:text="3 ฿" />
+
+                        <ImageView
+                            android:layout_width="16dp"
+                            android:layout_height="16dp"
+                            android:layout_gravity="bottom"
+                            android:layout_marginRight="4dp"
+                            android:contentDescription=""
+                            android:src="@drawable/ic_plus_copy_2" />
+
+                        <TextView
+                            android:id="@+id/xpTaskTextView"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="bottom"
+                            android:layout_marginRight="16dp"
+                            android:textColor="@android:color/white"
+                            tools:text="9 XP" />
+                    </LinearLayout>
+                </LinearLayout>
+            </FrameLayout>
+
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <RelativeLayout
+                    android:id="@+id/completeLayoutCard"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:paddingBottom="8dp"
+                    android:paddingLeft="16dp"
+                    android:paddingRight="16dp"
+                    android:paddingTop="8dp"
+                    android:visibility="gone">
+
+                    <ImageView
+                        android:id="@+id/completeHandImageView"
+                        android:layout_width="36dp"
+                        android:layout_height="36dp"
+                        android:layout_margin="16dp"
+                        android:src="@drawable/ic_thumb_up_48dp" />
+
+                    <com.devspark.robototextview.widget.RobotoTextView
+                        android:id="@+id/completeDescTextView"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignLeft="@+id/completeTextView"
+                        android:layout_alignStart="@+id/completeTextView"
+                        android:layout_below="@+id/completeTextView"
+                        android:text="@string/complete_text_desc"
+                        android:textColor="@android:color/black"
+                        app:typeface="roboto_regular" />
+
+                    <com.devspark.robototextview.widget.RobotoTextView
+                        android:id="@+id/completeTextView"
+                        style="@style/TextAppearance.AppCompat.Medium"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentEnd="true"
+                        android:layout_alignParentRight="true"
+                        android:layout_alignParentTop="true"
+                        android:text="@string/complete_text"
+                        android:textColor="@android:color/black"
+                        app:typeface="roboto_medium" />
+                </RelativeLayout>
+
+                <LinearLayout
+                    android:id="@+id/moreCardInfo"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:paddingBottom="8dp"
+                    android:paddingLeft="16dp"
+                    android:paddingRight="16dp"
+                    android:paddingTop="8dp"
+                    android:visibility="gone">
+
+                    <ProgressBar
+                        android:id="@+id/userLevelProgressBar"
+                        style="@style/Widget.AppCompat.ProgressBar.Horizontal"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="4dp"
+                        android:progressDrawable="@drawable/progress"
+                        tools:max="100"
+                        tools:progress="50"
+                        tools:secondaryProgress="70" />
+
+                    <com.devspark.robototextview.widget.RobotoTextView
+                        android:id="@+id/userLevelCountTextView"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentEnd="true"
+                        android:layout_alignParentRight="true"
+                        android:layout_gravity="start"
+                        android:textColor="@color/colorAccent"
+                        app:typeface="roboto_medium"
+                        tools:text="500,000 / 1,500,000" />
+
+                    <android.support.v7.widget.AppCompatButton
+                        android:id="@+id/sendButton"
+                        style="@style/Widget.AppCompat.Button.Borderless"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="right"
+                        android:foreground="?attr/selectableItemBackground"
+                        android:text="@string/add"
+                        android:textColor="@color/colorPrimary" />
+                </LinearLayout>
+            </FrameLayout>
+        </LinearLayout>
+    </android.support.v7.widget.CardView>
+</FrameLayout>

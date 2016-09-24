@@ -79,7 +79,7 @@ public class AchievementsFragment extends BaseFragment implements AchievementsMv
 
         mAchievementsRecyclerView.setHasFixedSize(true);
         mAchievementsRecyclerView.setLayoutManager(mLayoutManager);
-        mAchievementsRecyclerView.addItemDecoration(new DividerItemDecoration(getActivity(), DividerItemDecoration.HORIZONTAL_LIST));
+        mAchievementsRecyclerView.addItemDecoration(new DividerItemDecoration(getActivity(), R.drawable.divider));
 
         ItemClickSupport.addTo(mAchievementsRecyclerView)
                 .setOnItemClickListener(new ItemClickSupport.OnItemClickListener() {

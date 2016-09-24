@@ -1,7 +1,6 @@
 package com.github.dan4ik95dv.app.ui.presenter;
 
 import android.content.Context;
-import android.support.annotation.NonNull;
 
 import com.github.dan4ik95dv.app.application.App;
 import com.github.dan4ik95dv.app.model.user.Level;
@@ -43,6 +42,7 @@ public class MainPresenter implements Presenter<MainMvpView> {
         fixturaLevel.setStartCount(0);
         fixturaLevel.setEndCount(10);
         fixturaLevel.setName("Новичок");
+        fixturaUser.setRating(5);
         fixturaUser.setAvatar("https://cdn.zeplin.io/57e556f26282c2b426c815f7/assets/0DB324A9-C882-47F5-9E2F-2C515553D00F.png");
         fixturaUser.setFullName("Пупкин Василий");
         fixturaUser.setLevel(fixturaLevel);

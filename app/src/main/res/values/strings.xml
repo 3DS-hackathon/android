@@ -16,7 +16,12 @@
     <string name="my_quests_title">Мои квесты</string>
     <string name="my_achievements_title">Награды</string>
     <string name="level_format_header_view" formatted="false">%s • %d-й уровень</string>
-    <string name="user_level_count_text_view" formatted="false">%d / %d</string>
-    <string name="balance" formatted="false">%d ฿</string>
-    <string name="xpa" formatted="false">%d XP</string>
+    <string name="user_level_count_text_view" formatted="false">%s из %s XP</string>
+    <string name="balance" formatted="false">%s ฿</string>
+    <string name="xpa" formatted="false">%s XP</string>
+    <string name="add">Добавить</string>
+    <string name="open_title">Open</string>
+    <string name="close_title">Close</string>
+    <string name="complete_text">Отлично! Задание выполнено</string>
+    <string name="complete_text_desc">Вы будете вознаграждены сразу после проверки</string>
 </resources>

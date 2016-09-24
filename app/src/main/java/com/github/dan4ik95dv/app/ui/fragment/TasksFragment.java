@@ -2,6 +2,7 @@ package com.github.dan4ik95dv.app.ui.fragment;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -15,7 +16,6 @@ import com.github.dan4ik95dv.app.di.module.fragment.TasksModule;
 import com.github.dan4ik95dv.app.ui.activity.BaseActivity;
 import com.github.dan4ik95dv.app.ui.presenter.TasksPresenter;
 import com.github.dan4ik95dv.app.ui.view.TasksMvpView;
-import com.github.dan4ik95dv.app.ui.widget.DividerItemDecoration;
 import com.github.dan4ik95dv.app.ui.widget.ItemClickSupport;
 import com.github.dan4ik95dv.app.util.Constants;
 
@@ -34,6 +34,8 @@ public class TasksFragment extends BaseFragment implements TasksMvpView {
 
     @BindView(R.id.tasksRecyclerView)
     RecyclerView mTasksRecyclerView;
+    @BindView(R.id.swipeTssksContainer)
+    SwipeRefreshLayout mSwipeContainer;
 
 
     Toast errorToast;
@@ -79,7 +81,6 @@ public class TasksFragment extends BaseFragment implements TasksMvpView {
 
         mTasksRecyclerView.setHasFixedSize(true);
         mTasksRecyclerView.setLayoutManager(mLayoutManager);
-        mTasksRecyclerView.addItemDecoration(new DividerItemDecoration(getActivity(), DividerItemDecoration.HORIZONTAL_LIST));
 
         ItemClickSupport.addTo(mTasksRecyclerView)
                 .setOnItemClickListener(new ItemClickSupport.OnItemClickListener() {
@@ -88,6 +89,11 @@ public class TasksFragment extends BaseFragment implements TasksMvpView {
 
                     }
                 });
+        mSwipeContainer.setOnRefreshListener(presenter.getSwipeRefreshLayoutListener());
+        mSwipeContainer.setColorSchemeResources(
+                R.color.colorPrimary,
+                R.color.colorPrimary,
+                R.color.colorPrimary);
     }
 
     private void hideProgressItem() {

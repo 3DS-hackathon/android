@@ -4,6 +4,7 @@ import android.content.Context;
 
 import com.github.dan4ik95dv.app.di.scope.activity.MainScope;
 import com.github.dan4ik95dv.app.ui.presenter.MainPresenter;
+import com.github.dan4ik95dv.app.ui.presenter.ProfilePresenter;
 
 import dagger.Module;
 import dagger.Provides;
@@ -21,4 +22,10 @@ public class MainModule {
     public MainPresenter provideMainPresenter() {
         return new MainPresenter(context);
     }
+
+    @Provides
+    public ProfilePresenter provideProfilePresenter() {
+        return new ProfilePresenter(context);
+    }
+
 }

@@ -33,7 +33,7 @@ public class LoginActivity extends BaseActivity implements LoginMvpView {
     @OnClick(R.id.loginButton)
     public void login() {
         nextToMainActivity();
-//        presenter.login(emailEditText.getText().toString(), passwordEditText.getText().toString());
+//        mainPresenter.login(emailEditText.getText().toString(), passwordEditText.getText().toString());
     }
 
     @Override
