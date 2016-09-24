@@ -97,6 +97,9 @@ public class TasksFragment extends BaseFragment implements TasksMvpView {
     }
 
     private void hideProgressItem() {
+        if (mSwipeContainer != null) {
+            mSwipeContainer.setRefreshing(false);
+        }
         if (presenter.getAdapter().getTaskList().size() > 0 &&
                 presenter.getAdapter().getTaskList().get(presenter.getAdapter().getTaskList().size() - 1) == null) {
             presenter.getAdapter().getTaskList().remove(presenter.getAdapter().getTaskList().size() - 1);
@@ -108,9 +111,6 @@ public class TasksFragment extends BaseFragment implements TasksMvpView {
 
     @Override
     public void showError() {
-        if (mSwipeContainer != null) {
-            mSwipeContainer.setRefreshing(false);
-        }
         hideProgressItem();
 
         if (errorToast == null)
@@ -135,9 +135,6 @@ public class TasksFragment extends BaseFragment implements TasksMvpView {
 
     @Override
     public void hideProgress() {
-        if (mSwipeContainer != null) {
-            mSwipeContainer.setRefreshing(false);
-        }
         hideProgressItem();
     }
 

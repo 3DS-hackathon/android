@@ -48,6 +48,7 @@ public class TasksPresenter implements Presenter<TasksMvpView> {
             tasksMvpView.hideProgress();
         }
     };
+
     private Context context;
     private BaseActivity activity;
     private Boolean hasNext = true;

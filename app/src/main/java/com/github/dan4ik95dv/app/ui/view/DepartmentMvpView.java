@@ -1,0 +1,6 @@
+package com.github.dan4ik95dv.app.ui.view;
+
+public interface DepartmentMvpView extends MvpView {
+    void showError();
+
+}

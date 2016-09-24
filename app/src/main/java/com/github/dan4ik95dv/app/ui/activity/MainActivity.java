@@ -210,7 +210,7 @@ public class MainActivity extends BaseActivity implements MainMvpView, ProfileMv
             mSwipeContainer.setRefreshing(false);
         }
 
-        Glide.with(this).load(user.getAvatar()).placeholder(R.drawable.user).into(mUserAvatarCircleImageView);
+        Glide.with(this).load(user.getAvatar()).error(R.drawable.user).placeholder(R.drawable.user).into(mUserAvatarCircleImageView);
 
         if (user.getFullName() != null) {
             String fullName = TextUtils.isEmpty(user.getFullName()) ? getString(R.string.anonim) : user.getFullName();
@@ -237,7 +237,7 @@ public class MainActivity extends BaseActivity implements MainMvpView, ProfileMv
     @Override
     public void fillHeaderView(User user) {
 
-        Glide.with(this).load(user.getAvatar()).placeholder(R.drawable.user).into(userAvatarCircleImageView);
+        Glide.with(this).load(user.getAvatar()).error(R.drawable.user).placeholder(R.drawable.user).into(userAvatarCircleImageView);
 
         if (user.getFullName() != null)
             userFullNameTextView.setText(user.getFullName());

@@ -97,6 +97,9 @@ public class CurrentTasksFragment extends BaseFragment implements CurrentTasksMv
     }
 
     private void hideProgressItem() {
+        if (mSwipeContainer != null) {
+            mSwipeContainer.setRefreshing(false);
+        }
         if (presenter.getAdapter().getTaskList().size() > 0 &&
                 presenter.getAdapter().getTaskList().get(presenter.getAdapter().getTaskList().size() - 1) == null) {
             presenter.getAdapter().getTaskList().remove(presenter.getAdapter().getTaskList().size() - 1);
