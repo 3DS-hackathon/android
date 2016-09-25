@@ -6,6 +6,7 @@ import android.support.annotation.Nullable;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.AppCompatButton;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -207,7 +208,10 @@ public class CurrentTaskAdapter extends RecyclerView.Adapter<CurrentTaskAdapter.
                 });
                 xpTaskTextView.setText(task.getExperience() != null ? context.getString(R.string.xpa, Utils.formatNumber(task.getExperience())) : "");
 
-                typeTaskTextView.setText(task.getType() != null ? task.getType() : "");
+                if (!TextUtils.isEmpty(task.getType())) {
+                    String type = context.getString(task.getType() == "task" ? R.string.quest_str : R.string.count);
+                    typeTaskTextView.setText(type);
+                }
                 priceTaskTextView.setText(task.getPrice() != null ? context.getString(R.string.balance, Utils.formatNumber(task.getPrice())) : "");
                 taskNameTextView.setText(task.getName() != null ? task.getName() : "");
 

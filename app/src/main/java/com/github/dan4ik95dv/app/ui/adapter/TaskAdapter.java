@@ -5,6 +5,7 @@ import android.graphics.PorterDuff;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -196,7 +197,11 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.BaseViewHolder
             if (task != null) {
                 xpTaskTextView.setText(task.getExperience() != null ? context.getString(R.string.xpa, Utils.formatNumber(task.getExperience())) : "");
 
-                typeTaskTextView.setText(task.getType() != null ? task.getType() : "");
+                if (!TextUtils.isEmpty(task.getType())) {
+                    String type = context.getString(task.getType() == "task" ? R.string.quest_str : R.string.count);
+                    typeTaskTextView.setText(type);
+                }
+
                 priceTaskTextView.setText(task.getPrice() != null ? context.getString(R.string.balance, Utils.formatNumber(task.getPrice())) : "");
                 taskNameTextView.setText(task.getName() != null ? task.getName() : "");
             }

@@ -82,7 +82,10 @@ public class MoreTaskActivity extends BaseActivity implements MoreTaskMvpView {
     @Override
     public void fillTask(Task task) {
         Glide.with(this).load(task.getPic()).centerCrop().into(mTaskPicImageView);
-        mTypeTaskTextView.setText(TextUtils.isEmpty(task.getType()) ? "" : task.getType());
+        if (!TextUtils.isEmpty(task.getType())) {
+            String type = getString(task.getType() == "task" ? R.string.quest_str : R.string.count);
+            mTypeTaskTextView.setText(type);
+        }
         mNameTaskTextView.setText(TextUtils.isEmpty(task.getName()) ? "" : task.getName());
         mToolbar.setTitle(TextUtils.isEmpty(task.getName()) ? "" : task.getName());
         mDescTaskTextView.setText(TextUtils.isEmpty(task.getDesc()) ? "" : task.getDesc());

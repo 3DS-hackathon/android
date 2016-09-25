@@ -8,10 +8,7 @@
             android:id="@+id/action_department"
             android:title="@string/my_department"
             app:showAsAction="never" />
-        <item
-            android:id="@+id/action_about"
-            android:title="@string/about_title"
-            app:showAsAction="never" />
+
         <item
             android:id="@+id/action_logout"
             android:title="@string/logout"

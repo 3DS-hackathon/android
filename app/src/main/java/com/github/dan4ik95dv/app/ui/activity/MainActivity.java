@@ -227,7 +227,7 @@ public class MainActivity extends BaseActivity implements MainMvpView, ProfileMv
             mUserLevelProgressBar.setProgress(user.getRating());
             mUserLevelProgressBar.setMax(user.getLevel().getEndCount());
             mUserLevelNameTextView.setText(user.getLevel().getName());
-            mUserLevelTextView.setText(String.valueOf(user.getLevel().getLevel()));
+            mUserLevelTextView.setText(user.getLevel().getLevel() != null ? String.valueOf(user.getLevel().getLevel()) : "0");
             mUserLevelCountTextView.setText(getString(R.string.user_level_count_text_view, Utils.formatNumber(user.getRating()), Utils.formatNumber(user.getLevel().getEndCount())));
         }
 

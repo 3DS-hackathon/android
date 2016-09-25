@@ -44,7 +44,6 @@ public class PeoplesPresenter implements Presenter<PeoplesMvpView> {
     private String token;
     private Context context;
     private BaseActivity activity;
-    private Boolean hasNext = true;
 
     public PeoplesPresenter(Context context) {
         this.context = context;
@@ -70,6 +69,7 @@ public class PeoplesPresenter implements Presenter<PeoplesMvpView> {
 
     public void init() {
         mPeoplesAdapter = new PeoplesAdapter(context);
+        mPeoplesAdapter.registerAdapterDataObserver(mAdapterDataObserver);
         getPeoples();
     }
 
@@ -93,6 +93,7 @@ public class PeoplesPresenter implements Presenter<PeoplesMvpView> {
                         realm.copyToRealmOrUpdate(response.body().getUsers());
                         realm.commitTransaction();
                         mPeoplesAdapter.setUserList(response.body().getUsers());
+
                     } else {
                         peoplesMvpView.showError();
                     }
