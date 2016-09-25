@@ -87,8 +87,9 @@ public class ProfilePresenter implements Presenter<ProfileMvpView> {
                     if (response.isSuccessful()) {
                         profileMvpView.fillUserProfile(response.body());
                         profileMvpView.fillHeaderView(response.body());
-
-                        realm.insertOrUpdate(response.body());
+                        realm.beginTransaction();
+                        realm.copyToRealmOrUpdate(response.body());
+                        realm.commitTransaction();
                     }
                 }
 

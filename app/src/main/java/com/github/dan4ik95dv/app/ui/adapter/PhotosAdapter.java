@@ -14,14 +14,16 @@ import android.widget.ProgressBar;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.github.dan4ik95dv.app.R;
-import com.github.dan4ik95dv.app.model.app.Image;
+import com.github.dan4ik95dv.app.model.attachment.Attachment;
+import com.github.dan4ik95dv.app.util.Constants;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class PhotosAdapter extends RecyclerView.Adapter<PhotosAdapter.ViewHolder> {
     private static final String TAG = "PhotosAdapter";
 
-    private ArrayList<Image> imageList = new ArrayList<>();
+    private ArrayList<Attachment> imageList = new ArrayList<>();
     private ProgressItem progressItem;
     private boolean editMode = false;
     private Context mContext;
@@ -32,21 +34,13 @@ public class PhotosAdapter extends RecyclerView.Adapter<PhotosAdapter.ViewHolder
         this.mContext = context;
     }
 
-    public ArrayList<Image> getImageList() {
+    public ArrayList<Attachment> getImageList() {
         return imageList;
     }
 
-    public void setImageList(ArrayList<Image> imageList) {
+    public void setImageList(ArrayList<Attachment> imageList) {
         this.imageList = imageList;
         notifyDataSetChanged();
-    }
-
-    public ArrayList<Image> getImages() {
-        ArrayList<Image> imagesUrl = new ArrayList<>();
-        for (Image image : imageList) {
-            imagesUrl.add(image);
-        }
-        return imagesUrl;
     }
 
     @Override
@@ -68,10 +62,10 @@ public class PhotosAdapter extends RecyclerView.Adapter<PhotosAdapter.ViewHolder
 
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
-        Image image = imageList.get(position);
+        Attachment attachment = imageList.get(position);
 
-        if (!TextUtils.isEmpty(image.getOriginal())) {
-            Log.d("Glide", image.getOriginal());
+        if (!TextUtils.isEmpty(attachment.getPath())) {
+            Log.d("Glide", attachment.getPath());
             if (progressItem != null && progressItem.getPosition() == position) {
                 if (progressItem.getProgress() > 0 && progressItem.getProgress() < 100) {
                     holder.appProgressImage.setVisibility(View.VISIBLE);
@@ -82,7 +76,7 @@ public class PhotosAdapter extends RecyclerView.Adapter<PhotosAdapter.ViewHolder
                     progressItem.setProgress(0);
                 }
             }
-            Glide.with(mContext).load(image.getOriginal()).centerCrop().diskCacheStrategy(DiskCacheStrategy.ALL).into(holder.appThumb);
+            Glide.with(mContext).load(Constants.Api.DOMAIN_URL + attachment.getPath()).centerCrop().diskCacheStrategy(DiskCacheStrategy.ALL).into(holder.appThumb);
         } else {
             Glide.clear(holder.appThumb);
             holder.appThumb.setImageDrawable(null);
@@ -100,9 +94,13 @@ public class PhotosAdapter extends RecyclerView.Adapter<PhotosAdapter.ViewHolder
         return position;
     }
 
+    public void add(List<Attachment> attachment) {
+        imageList.addAll(attachment);
+        notifyDataSetChanged();
+    }
 
-    public void add(Image image) {
-        imageList.add(image);
+    public void add(Attachment attachment) {
+        imageList.add(attachment);
         notifyDataSetChanged();
     }
 
@@ -118,7 +116,6 @@ public class PhotosAdapter extends RecyclerView.Adapter<PhotosAdapter.ViewHolder
 
         public ViewHolder(View view) {
             super(view);
-
             appThumb = (ImageView) view.findViewById(R.id.appThumbItem);
             appProgressImage = (ProgressBar) view.findViewById(R.id.appProgressImage);
         }

@@ -12,6 +12,26 @@ public class Achievement extends RealmObject {
     String name;
     @SerializedName("pic")
     String pic;
+    @SerializedName("background_color")
+    String backgroundColor;
+    @SerializedName("text_color")
+    String textColor;
+
+    public String getBackgroundColor() {
+        return backgroundColor;
+    }
+
+    public void setBackgroundColor(String backgroundColor) {
+        this.backgroundColor = backgroundColor;
+    }
+
+    public String getTextColor() {
+        return textColor;
+    }
+
+    public void setTextColor(String textColor) {
+        this.textColor = textColor;
+    }
 
     public String getDesc() {
         return desc;

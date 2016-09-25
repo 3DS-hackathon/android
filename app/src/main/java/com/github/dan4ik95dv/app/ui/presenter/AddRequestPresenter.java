@@ -9,9 +9,9 @@ import android.os.Build;
 import android.os.Environment;
 import android.provider.DocumentsContract;
 import android.provider.MediaStore;
-import android.util.Log;
 import android.widget.Toast;
 
+import com.github.dan4ik95dv.app.R;
 import com.github.dan4ik95dv.app.application.App;
 import com.github.dan4ik95dv.app.io.api.RestInterface;
 import com.github.dan4ik95dv.app.model.attachment.Attachment;
@@ -19,6 +19,7 @@ import com.github.dan4ik95dv.app.model.task.Request;
 import com.github.dan4ik95dv.app.model.task.Task;
 import com.github.dan4ik95dv.app.model.task.TaskRequest;
 import com.github.dan4ik95dv.app.ui.activity.BaseActivity;
+import com.github.dan4ik95dv.app.ui.adapter.PhotosAdapter;
 import com.github.dan4ik95dv.app.ui.view.AddRequestMvpView;
 import com.github.dan4ik95dv.app.util.Constants;
 
@@ -35,8 +36,6 @@ import okhttp3.RequestBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
-
-import static gun0912.tedbottompicker.TedBottomPicker.TAG;
 
 public class AddRequestPresenter implements Presenter<AddRequestMvpView> {
 
@@ -55,14 +54,15 @@ public class AddRequestPresenter implements Presenter<AddRequestMvpView> {
     private Integer taskId;
     private Context context;
     private List<Integer> attachmentIds = new ArrayList<>();
-    private List<Attachment> attachmentList = new ArrayList<>();
     private AddRequestMvpView addRequestMvpView;
+    private PhotosAdapter photosAdapter;
 
     public AddRequestPresenter(Context context) {
         attachView((AddRequestMvpView) context);
         App.getInstance().getClientComponent().inject(this);
         this.activity = (BaseActivity) context;
         this.context = context;
+        this.photosAdapter = new PhotosAdapter(context, true);
         this.token = sharedPreferences.getString(Constants.Configs.TOKEN, null);
     }
 
@@ -83,9 +83,8 @@ public class AddRequestPresenter implements Presenter<AddRequestMvpView> {
         if (filePath != null && !filePath.isEmpty()) {
             File file = new File(filePath);
             if (file.exists()) {
-
                 // creates RequestBody instance from file
-                RequestBody requestFile = RequestBody.create(MediaType.parse("multipart/form-data"), file);
+                final RequestBody requestFile = RequestBody.create(MediaType.parse("multipart/form-data"), file);
                 // MultipartBody.Part is used to send also the actual filename
                 MultipartBody.Part body = MultipartBody.Part.createFormData("file", file.getName(), requestFile);
 
@@ -94,8 +93,9 @@ public class AddRequestPresenter implements Presenter<AddRequestMvpView> {
                     @Override
                     public void onResponse(Call<Attachment> call, Response<Attachment> response) {
                         if (response.isSuccessful()) {
-                            attachmentList.add(response.body());
-                            Log.d(TAG, "onResponse: " + response.body().getFileName());
+                            photosAdapter.add(response.body());
+                            attachmentIds.add(response.body().getId());
+                            addRequestMvpView.requestSuccess();
                         } else {
                             addRequestMvpView.showError();
                         }
@@ -103,7 +103,7 @@ public class AddRequestPresenter implements Presenter<AddRequestMvpView> {
 
                     @Override
                     public void onFailure(Call<Attachment> call, Throwable t) {
-                        // TODO: 25.09.2016 Error
+                        addRequestMvpView.showError();
                     }
                 });
             }
@@ -215,6 +215,12 @@ public class AddRequestPresenter implements Presenter<AddRequestMvpView> {
             taskId = activity.getIntent().getIntExtra(Constants.TASK_ID, -1);
         if (taskId != -1) {
             task = realm.where(Task.class).equalTo("id", taskId).findFirst();
+            List<Request> requestsList = realm.where(Request.class).equalTo("task.id", taskId).findAll();
+            if (requestsList != null && requestsList.size() > 0) {
+                for (Request request : requestsList)
+                    photosAdapter.add(request.getAttachments());
+            }
+
             addRequestMvpView.fillTask(task);
         }
     }
@@ -229,7 +235,11 @@ public class AddRequestPresenter implements Presenter<AddRequestMvpView> {
             @Override
             public void onResponse(Call<Request> call, Response<Request> response) {
                 if (response.isSuccessful()) {
-                    Toast.makeText(activity, "Заявка успешно добавлена!", Toast.LENGTH_SHORT).show();
+                    realm.beginTransaction();
+                    realm.copyToRealmOrUpdate(response.body());
+                    realm.commitTransaction();
+                    Toast.makeText(activity, R.string.request_has_been_added, Toast.LENGTH_SHORT).show();
+                    addRequestMvpView.requestSuccess();
                     activity.finish();
                 } else {
                     addRequestMvpView.showError();
@@ -243,4 +253,7 @@ public class AddRequestPresenter implements Presenter<AddRequestMvpView> {
         });
     }
 
+    public PhotosAdapter getPhotosAdapter() {
+        return photosAdapter;
+    }
 }

@@ -124,7 +124,9 @@ public class TasksPresenter implements Presenter<TasksMvpView> {
                     public void onResponse(Call<TasksResponse> call, Response<TasksResponse> response) {
                         if (response.isSuccessful()) {
                             tasksMvpView.hideProgress();
-                            realm.insertOrUpdate(response.body().getTasks());
+                            realm.beginTransaction();
+                            realm.copyToRealmOrUpdate(response.body().getTasks());
+                            realm.commitTransaction();
                             mTaskAdapter.setTaskList(response.body().getTasks());
                         } else {
                             tasksMvpView.showError();
@@ -148,7 +150,9 @@ public class TasksPresenter implements Presenter<TasksMvpView> {
                 public void onResponse(Call<TasksResponse> call, Response<TasksResponse> response) {
                     if (response.isSuccessful()) {
                         tasksMvpView.hideProgress();
-                        realm.insertOrUpdate(response.body().getTasks());
+                        realm.beginTransaction();
+                        realm.copyToRealmOrUpdate(response.body().getTasks());
+                        realm.beginTransaction();
                         List<Task> tasks = realm.where(Task.class).findAll();
                         mTaskAdapter.setTaskList(tasks);
                     } else {

@@ -4,8 +4,11 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.widget.AppCompatButton;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
+import android.view.MenuItem;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
@@ -15,9 +18,9 @@ import com.github.dan4ik95dv.app.R;
 import com.github.dan4ik95dv.app.di.component.activity.DaggerAddRequestComponent;
 import com.github.dan4ik95dv.app.di.module.activity.AddRequestModule;
 import com.github.dan4ik95dv.app.model.task.Task;
-import com.github.dan4ik95dv.app.ui.adapter.PhotosAdapter;
 import com.github.dan4ik95dv.app.ui.presenter.AddRequestPresenter;
 import com.github.dan4ik95dv.app.ui.view.AddRequestMvpView;
+import com.github.dan4ik95dv.app.util.Progress;
 import com.github.dan4ik95dv.app.util.Utils;
 
 import javax.inject.Inject;
@@ -30,6 +33,9 @@ public class AddRequestActivity extends BaseActivity implements AddRequestMvpVie
 
     @Inject
     AddRequestPresenter presenter;
+
+    @Inject
+    Progress progress;
 
     @BindView(R.id.taskPicImageView)
     ImageView mTaskPicImageView;
@@ -50,6 +56,9 @@ public class AddRequestActivity extends BaseActivity implements AddRequestMvpVie
     @BindView(R.id.attachAdd)
     FloatingActionButton mAttachAdd;
 
+    @BindView(R.id.imageGallery)
+    RecyclerView imageGallery;
+
     @OnClick(R.id.attachAdd)
     public void attachAddOnClick() {
         callTedBottomPicker();
@@ -57,9 +66,11 @@ public class AddRequestActivity extends BaseActivity implements AddRequestMvpVie
 
     @OnClick(R.id.addSellTaskButton)
     public void addSellOnClick() {
+        progress.show();
         presenter.sentRequest();
     }
 
+    org.solovyev.android.views.llm.LinearLayoutManager wrappingLinearLayoutManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -68,6 +79,19 @@ public class AddRequestActivity extends BaseActivity implements AddRequestMvpVie
         setContentView(R.layout.activity_add_request);
         presenter.init();
         initActionBar();
+        initGallery();
+    }
+
+
+    private void initGallery() {
+        wrappingLinearLayoutManager = new org.solovyev.android.views.llm.LinearLayoutManager(this);
+        wrappingLinearLayoutManager.setOrientation(LinearLayoutManager.HORIZONTAL);
+
+        imageGallery.setLayoutManager(wrappingLinearLayoutManager);
+
+        imageGallery.setAdapter(presenter.getPhotosAdapter());
+        imageGallery.addItemDecoration(new org.solovyev.android.views.llm.DividerItemDecoration(this, null));
+
     }
 
     private void initActionBar() {
@@ -86,6 +110,7 @@ public class AddRequestActivity extends BaseActivity implements AddRequestMvpVie
                 .setOnImageSelectedListener(new TedBottomPicker.OnImageSelectedListener() {
                     @Override
                     public void onImageSelected(Uri uri) {
+                        progress.show();
                         presenter.uploadFile(uri);
                     }
                 })
@@ -96,7 +121,13 @@ public class AddRequestActivity extends BaseActivity implements AddRequestMvpVie
 
     @Override
     public void showError() {
+        progress.close();
         showErrorInternetDialog(this);
+    }
+
+    @Override
+    public void requestSuccess() {
+        progress.close();
     }
 
     @Override
@@ -107,10 +138,15 @@ public class AddRequestActivity extends BaseActivity implements AddRequestMvpVie
         mXpTaskTextView.setText(getString(R.string.xpa, Utils.formatNumber(task.getExperience())));
         nameTaskTextView.setText(TextUtils.isEmpty(task.getName()) ? "" : task.getName());
         typeTaskTextView.setText(TextUtils.isEmpty(task.getType()) ? "" : task.getType());
+
+
         mToolbar.setTitle(TextUtils.isEmpty(task.getName()) ? "" : task.getName());
-        mTaskLevelProgressBar.setProgress(task.getProgress());
-        mTaskLevelProgressBar.setSecondaryProgress(task.getProgressUser());
-        mTaskLevelProgressBar.setMax(task.getTotalCount());
+
+        if (task.getProgress() != null && task.getProgressUser() != null) {
+            mTaskLevelProgressBar.setProgress(task.getProgress());
+            mTaskLevelProgressBar.setSecondaryProgress(task.getProgressUser());
+            mTaskLevelProgressBar.setMax(task.getTotalCount());
+        }
     }
 
     @Override
@@ -119,6 +155,16 @@ public class AddRequestActivity extends BaseActivity implements AddRequestMvpVie
         presenter.detachView();
     }
 
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                onBackPressed();
+                return true;
 
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+    }
 }
 

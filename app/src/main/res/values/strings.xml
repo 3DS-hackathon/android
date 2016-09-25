@@ -35,8 +35,9 @@
     <string name="indefined">Неопределен</string>
     <string name="my_profile">Мой профиль</string>
     <string name="my_department">Моя команда</string>
-    <string name="join_task">Учавствовать</string>
+    <string name="join_task">Участвовать</string>
     <string name="add_sell">Добавить продажу</string>
     <string name="alert_attach_info">Внимание! Для выполнения этого задания необходимо прикреплять фотографии.</string>
     <string name="select_pic">Выберите изображение</string>
+    <string name="request_has_been_added">Заявка успешно добавлена!</string>
 </resources>

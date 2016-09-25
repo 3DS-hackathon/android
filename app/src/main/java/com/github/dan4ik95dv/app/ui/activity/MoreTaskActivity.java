@@ -5,6 +5,7 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.v7.widget.AppCompatButton;
 import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
+import android.view.MenuItem;
 import android.widget.ImageView;
 
 import com.bumptech.glide.Glide;
@@ -16,6 +17,9 @@ import com.github.dan4ik95dv.app.model.task.Task;
 import com.github.dan4ik95dv.app.ui.presenter.MoreTaskPresenter;
 import com.github.dan4ik95dv.app.ui.view.MoreTaskMvpView;
 import com.github.dan4ik95dv.app.util.Utils;
+
+import org.joda.time.format.DateTimeFormat;
+import org.joda.time.format.DateTimeFormatter;
 
 import javax.inject.Inject;
 
@@ -66,6 +70,7 @@ public class MoreTaskActivity extends BaseActivity implements MoreTaskMvpView {
         DaggerMoreTaskComponent.builder().moreTaskModule(new MoreTaskModule(this)).build().inject(this);
         setContentView(R.layout.activity_more_task);
         presenter.init();
+        initActionBar();
     }
 
 
@@ -82,7 +87,24 @@ public class MoreTaskActivity extends BaseActivity implements MoreTaskMvpView {
         mToolbar.setTitle(TextUtils.isEmpty(task.getName()) ? "" : task.getName());
         mDescTaskTextView.setText(TextUtils.isEmpty(task.getDesc()) ? "" : task.getDesc());
         mPriceTaskTextView.setText(task.getPrice() != null && task.getExperience() != null ? getString(R.string.balance_xpa, Utils.formatNumber(task.getPrice()), Utils.formatNumber(task.getExperience())) : "");
-        mDateTaskTextView.setText(" Date !!!11");
+
+        if (task.getEndTimestamp() != null && task.getStartTimestamp() != null) {
+            DateTimeFormatter fmt = DateTimeFormat.forPattern("d MMMM HH:mm");
+            StringBuilder dateString = new StringBuilder();
+            dateString.append(fmt.print(task.getStartTimestamp()));
+            dateString.append(" - ");
+            dateString.append(fmt.print(task.getEndTimestamp()));
+            mDateTaskTextView.setText(dateString.toString());
+        }
+    }
+
+    private void initActionBar() {
+        setSupportActionBar(mToolbar);
+        if (getSupportActionBar() != null) {
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+            getSupportActionBar().setDisplayShowHomeEnabled(true);
+            getSupportActionBar().setElevation(0);
+        }
     }
 
     @Override
@@ -91,6 +113,17 @@ public class MoreTaskActivity extends BaseActivity implements MoreTaskMvpView {
         presenter.detachView();
     }
 
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                onBackPressed();
+                return true;
+
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+    }
 
 }
 

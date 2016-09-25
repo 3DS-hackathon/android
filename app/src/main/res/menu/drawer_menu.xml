@@ -5,10 +5,6 @@
         android:id="@+id/nav_group_1"
         android:checkableBehavior="single">
         <item
-            android:id="@+id/action_main"
-            android:title="@string/my_profile"
-            app:showAsAction="never" />
-        <item
             android:id="@+id/action_department"
             android:title="@string/my_department"
             app:showAsAction="never" />

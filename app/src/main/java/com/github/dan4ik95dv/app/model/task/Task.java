@@ -30,6 +30,10 @@ public class Task extends RealmObject {
     Integer price;
     @SerializedName("pic")
     String pic;
+    @SerializedName("start_timestamp")
+    Long startTimestamp;
+    @SerializedName("end_timestamp")
+    Long endTimestamp;
 
     @Index
     @PrimaryKey
@@ -132,5 +136,21 @@ public class Task extends RealmObject {
 
     public void setUsers(RealmList<User> users) {
         this.users = users;
+    }
+
+    public Long getStartTimestamp() {
+        return startTimestamp;
+    }
+
+    public void setStartTimestamp(Long startTimestamp) {
+        this.startTimestamp = startTimestamp;
+    }
+
+    public Long getEndTimestamp() {
+        return endTimestamp;
+    }
+
+    public void setEndTimestamp(Long endTimestamp) {
+        this.endTimestamp = endTimestamp;
     }
 }
