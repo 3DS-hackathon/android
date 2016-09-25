@@ -34,6 +34,7 @@ public class ProfilePresenter implements Presenter<ProfileMvpView> {
     @Inject
     Realm realm;
     BaseActivity activity;
+    private User user;
     private String token;
     private ProfileMvpView profileMvpView;
 
@@ -85,10 +86,11 @@ public class ProfilePresenter implements Presenter<ProfileMvpView> {
                 @Override
                 public void onResponse(Call<User> call, Response<User> response) {
                     if (response.isSuccessful()) {
-                        profileMvpView.fillUserProfile(response.body());
-                        profileMvpView.fillHeaderView(response.body());
+                        user = response.body();
+                        profileMvpView.fillUserProfile(user);
+                        profileMvpView.fillHeaderView(user);
                         realm.beginTransaction();
-                        realm.copyToRealmOrUpdate(response.body());
+                        realm.copyToRealmOrUpdate(user);
                         realm.commitTransaction();
                     }
                 }
@@ -101,7 +103,7 @@ public class ProfilePresenter implements Presenter<ProfileMvpView> {
                 }
             });
         } else {
-            User user = realm.where(User.class).findFirst();
+            user = realm.where(User.class).findFirst();
             if (user != null) {
                 profileMvpView.fillUserProfile(user);
                 profileMvpView.fillHeaderView(user);
@@ -110,4 +112,9 @@ public class ProfilePresenter implements Presenter<ProfileMvpView> {
         }
     }
 
+    public void showDepartment() {
+        if (user != null) {
+            activity.showCompanyActivity(user.getDepartment().getId());
+        }
+    }
 }

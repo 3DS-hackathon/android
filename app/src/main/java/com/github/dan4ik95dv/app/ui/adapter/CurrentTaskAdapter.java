@@ -33,10 +33,16 @@ public class CurrentTaskAdapter extends RecyclerView.Adapter<CurrentTaskAdapter.
     private static final int VIEW_TYPE_ITEM_NO_IMAGE = 1;
 
     private Context mContext;
+    private CurrentTaskClick mCurrentTaskClick;
     private List<Task> mTaskList = new ArrayList<>();
 
-    public CurrentTaskAdapter(Context mContext) {
+    public CurrentTaskAdapter(Context mContext, CurrentTaskClick currentTaskClick) {
         this.mContext = mContext;
+        this.mCurrentTaskClick = currentTaskClick;
+    }
+
+    public interface CurrentTaskClick {
+        void add(Integer position);
     }
 
 
@@ -180,6 +186,7 @@ public class CurrentTaskAdapter extends RecyclerView.Adapter<CurrentTaskAdapter.
         @BindView(R.id.moreCardInfo)
         LinearLayout moreCardInfo;
 
+
         Context context;
 
         public ViewHolderNoImage(View itemView, Context context) {
@@ -192,6 +199,12 @@ public class CurrentTaskAdapter extends RecyclerView.Adapter<CurrentTaskAdapter.
         @Override
         public void bind(Task task) {
             if (task != null) {
+                sendButton.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        mCurrentTaskClick.add(getLayoutPosition());
+                    }
+                });
                 xpTaskTextView.setText(task.getExperience() != null ? context.getString(R.string.xpa, Utils.formatNumber(task.getExperience())) : "");
 
                 typeTaskTextView.setText(task.getType() != null ? task.getType() : "");
@@ -207,8 +220,8 @@ public class CurrentTaskAdapter extends RecyclerView.Adapter<CurrentTaskAdapter.
                             if (task.getTotalCount() != null) {
                                 userLevelCountTextView.setText(
                                         context.getString(R.string.user_level_count_text_view,
-                                                Utils.formatNumber(task.getProgressUser()),
-                                                Utils.formatNumber(task.getTotalCount())));
+                                                Utils.formatNumber(task.getProgressUser() != null ? task.getProgressUser() : 0),
+                                                Utils.formatNumber(task.getTotalCount() != null ? task.getTotalCount() : 0)));
 
                                 userLevelProgressBar.setProgress(0);
 

@@ -42,4 +42,5 @@
     <string name="request_has_been_added">Заявка успешно добавлена!</string>
     <string name="quest_str">Квест</string>
     <string name="count">Количество</string>
+    <string name="attach_doc_msg">Прикрепите хотя бы одну фотографию</string>
 </resources>

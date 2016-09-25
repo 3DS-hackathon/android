@@ -3,6 +3,8 @@ package com.github.dan4ik95dv.app.model;
 import com.github.dan4ik95dv.app.model.user.User;
 import com.google.gson.annotations.SerializedName;
 
+import java.util.List;
+
 import io.realm.RealmList;
 import io.realm.RealmObject;
 import io.realm.annotations.Index;
@@ -18,6 +20,9 @@ public class Department extends RealmObject {
     String name;
     @SerializedName("rating")
     Integer rating;
+    @SerializedName("achievements")
+    RealmList<User> achievements;
+
 
     @Index
     @PrimaryKey
@@ -66,11 +71,19 @@ public class Department extends RealmObject {
         this.rating = rating;
     }
 
-    public RealmList<User> getUsers() {
+    public List<User> getUsers() {
         return users;
     }
 
     public void setUsers(RealmList<User> users) {
         this.users = users;
+    }
+
+    public RealmList<User> getAchievements() {
+        return achievements;
+    }
+
+    public void setAchievements(RealmList<User> achievements) {
+        this.achievements = achievements;
     }
 }

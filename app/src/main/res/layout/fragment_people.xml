@@ -5,12 +5,12 @@
     android:fitsSystemWindows="true">
 
     <android.support.v4.widget.SwipeRefreshLayout
-        android:id="@+id/swipeTasksContainer"
+        android:id="@+id/swipePeopleContainer"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
         <android.support.v7.widget.RecyclerView
-            android:id="@+id/tasksRecyclerView"
+            android:id="@+id/peopleRecyclerView"
             android:layout_width="match_parent"
             android:layout_height="match_parent" />
 

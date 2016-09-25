@@ -73,7 +73,13 @@ public class CurrentTasksPresenter implements Presenter<CurrentTasksMvpView> {
 
 
     public void init() {
-        mTaskAdapter = new CurrentTaskAdapter(context);
+
+        mTaskAdapter = new CurrentTaskAdapter(context, new CurrentTaskAdapter.CurrentTaskClick() {
+            @Override
+            public void add(Integer position) {
+                addRequest(position);
+            }
+        });
         mTaskAdapter.registerAdapterDataObserver(mAdapterDataObserver);
 
         getCurrentTasks();

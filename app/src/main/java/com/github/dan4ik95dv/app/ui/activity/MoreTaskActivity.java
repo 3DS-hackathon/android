@@ -91,9 +91,9 @@ public class MoreTaskActivity extends BaseActivity implements MoreTaskMvpView {
         if (task.getEndTimestamp() != null && task.getStartTimestamp() != null) {
             DateTimeFormatter fmt = DateTimeFormat.forPattern("d MMMM HH:mm");
             StringBuilder dateString = new StringBuilder();
-            dateString.append(fmt.print(task.getStartTimestamp()));
+            dateString.append(fmt.print(task.getStartTimestamp()*1000));
             dateString.append(" - ");
-            dateString.append(fmt.print(task.getEndTimestamp()));
+            dateString.append(fmt.print(task.getEndTimestamp()*1000));
             mDateTaskTextView.setText(dateString.toString());
         }
     }

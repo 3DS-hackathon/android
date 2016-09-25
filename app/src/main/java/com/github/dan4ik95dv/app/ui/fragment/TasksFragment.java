@@ -34,7 +34,7 @@ public class TasksFragment extends BaseFragment implements TasksMvpView {
 
     @BindView(R.id.tasksRecyclerView)
     RecyclerView mTasksRecyclerView;
-    @BindView(R.id.swipeTssksContainer)
+    @BindView(R.id.swipeTasksContainer)
     SwipeRefreshLayout mSwipeContainer;
 
 

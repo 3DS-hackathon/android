@@ -11,11 +11,11 @@ import android.view.ViewGroup;
 import android.widget.Toast;
 
 import com.github.dan4ik95dv.app.R;
-import com.github.dan4ik95dv.app.di.component.fragment.DaggerCurrentTasksComponent;
-import com.github.dan4ik95dv.app.di.module.fragment.CurrentTasksModule;
+import com.github.dan4ik95dv.app.di.component.fragment.DaggerAchievementsDepartmentsComponent;
+import com.github.dan4ik95dv.app.di.module.fragment.AchievementsDepartmentsModule;
 import com.github.dan4ik95dv.app.ui.activity.BaseActivity;
-import com.github.dan4ik95dv.app.ui.presenter.CurrentTasksPresenter;
-import com.github.dan4ik95dv.app.ui.view.CurrentTasksMvpView;
+import com.github.dan4ik95dv.app.ui.presenter.AchievementsDepartmentsPresenter;
+import com.github.dan4ik95dv.app.ui.view.AchievementsDepartmentsMvpView;
 import com.github.dan4ik95dv.app.ui.widget.ItemClickSupport;
 import com.github.dan4ik95dv.app.util.Constants;
 
@@ -25,16 +25,17 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
 
-public class CurrentTasksFragment extends BaseFragment implements CurrentTasksMvpView {
+public class AchievementsDepartmentsFragment extends BaseFragment implements AchievementsDepartmentsMvpView {
     @Inject
-    CurrentTasksPresenter presenter;
+    AchievementsDepartmentsPresenter presenter;
 
     BaseActivity activity;
     Bundle savedInstanceState;
 
-    @BindView(R.id.tasksRecyclerView)
-    RecyclerView mTasksRecyclerView;
-    @BindView(R.id.swipeTasksContainer)
+    @BindView(R.id.achievementsRecyclerView)
+    RecyclerView mAchievementsRecyclerView;
+
+    @BindView(R.id.swipeAchievementsContainer)
     SwipeRefreshLayout mSwipeContainer;
 
 
@@ -50,13 +51,13 @@ public class CurrentTasksFragment extends BaseFragment implements CurrentTasksMv
         setHasOptionsMenu(true);
         this.activity = (BaseActivity) getActivity();
         this.savedInstanceState = savedInstanceState;
-        DaggerCurrentTasksComponent.builder().currentTasksModule(new CurrentTasksModule(getContext())).build().inject(this);
+        DaggerAchievementsDepartmentsComponent.builder().achievementsDepartmentsModule(new AchievementsDepartmentsModule(getContext())).build().inject(this);
         presenter.attachView(this);
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_tasks, container, false);
+        View view = inflater.inflate(R.layout.fragment_achievements, container, false);
         unbinder = ButterKnife.bind(this, view);
         initRecyclerView(inflater, container);
         presenter.init();
@@ -65,7 +66,7 @@ public class CurrentTasksFragment extends BaseFragment implements CurrentTasksMv
 
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
-        mTasksRecyclerView.setAdapter(presenter.getAdapter());
+        mAchievementsRecyclerView.setAdapter(presenter.getAdapter());
     }
 
     @Override
@@ -79,16 +80,15 @@ public class CurrentTasksFragment extends BaseFragment implements CurrentTasksMv
         mLayoutManager = new LinearLayoutManager(getContext());
         mLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
 
-        mTasksRecyclerView.setHasFixedSize(true);
-        mTasksRecyclerView.setLayoutManager(mLayoutManager);
+        mAchievementsRecyclerView.setHasFixedSize(true);
+        mAchievementsRecyclerView.setLayoutManager(mLayoutManager);
 
-        ItemClickSupport.addTo(mTasksRecyclerView)
+        ItemClickSupport.addTo(mAchievementsRecyclerView)
                 .setOnItemClickListener(new ItemClickSupport.OnItemClickListener() {
                     @Override
                     public void onItemClicked(RecyclerView recyclerView, int position, View v) {
-                        presenter.addRequest(position);
-                    }
 
+                    }
                 });
         mSwipeContainer.setOnRefreshListener(presenter.getSwipeRefreshLayoutListener());
         mSwipeContainer.setColorSchemeResources(
@@ -99,11 +99,10 @@ public class CurrentTasksFragment extends BaseFragment implements CurrentTasksMv
 
     private void hideProgressItem() {
         hideProgress();
-
-        if (presenter.getAdapter().getTaskList().size() > 0 &&
-                presenter.getAdapter().getTaskList().get(presenter.getAdapter().getTaskList().size() - 1) == null) {
-            presenter.getAdapter().getTaskList().remove(presenter.getAdapter().getTaskList().size() - 1);
-            presenter.getAdapter().notifyItemRemoved(presenter.getAdapter().getTaskList().size() - 1);
+        if (presenter.getAdapter().getAchievementList().size() > 0 &&
+                presenter.getAdapter().getAchievementList().get(presenter.getAdapter().getAchievementList().size() - 1) == null) {
+            presenter.getAdapter().getAchievementList().remove(presenter.getAdapter().getAchievementList().size() - 1);
+            presenter.getAdapter().notifyItemRemoved(presenter.getAdapter().getAchievementList().size() - 1);
         }
     }
 
@@ -123,14 +122,15 @@ public class CurrentTasksFragment extends BaseFragment implements CurrentTasksMv
 
 
     @Override
-    public CurrentTasksFragment getFragment() {
+    public AchievementsDepartmentsFragment getFragment() {
         return this;
     }
 
     @Override
-    public RecyclerView getTasksRecyclerView() {
-        return mTasksRecyclerView;
+    public RecyclerView getAchievementsRecyclerView() {
+        return mAchievementsRecyclerView;
     }
+
 
     @Override
     public void hideProgress() {

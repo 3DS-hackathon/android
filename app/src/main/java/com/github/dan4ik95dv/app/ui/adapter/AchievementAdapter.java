@@ -1,16 +1,20 @@
 package com.github.dan4ik95dv.app.ui.adapter;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.graphics.PorterDuff;
 import android.support.v4.content.ContextCompat;
+import android.support.v7.widget.CardView;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.ProgressBar;
-import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
+import com.devspark.robototextview.widget.RobotoTextView;
 import com.github.dan4ik95dv.app.R;
 import com.github.dan4ik95dv.app.model.achievement.Achievement;
 
@@ -34,27 +38,7 @@ public class AchievementAdapter extends RecyclerView.Adapter<AchievementAdapter.
     private int lastId;
 
     public AchievementAdapter(Context mContext, RecyclerView recyclerView) {
-        this.mContext = mContext;
-        final LinearLayoutManager linearLayoutManager = (LinearLayoutManager) recyclerView.getLayoutManager();
-        recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
-            @Override
-            public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
-                super.onScrolled(recyclerView, dx, dy);
-                totalItemCount = linearLayoutManager.getItemCount();
-                lastVisibleItem = linearLayoutManager.findLastVisibleItemPosition();
-                if (!isLoading
-                        && lastErrorTime < System.currentTimeMillis() - 5000 || lastErrorTime == 0
-                        && totalItemCount <= (lastVisibleItem + visibleThreshold)
-                        && mAchievementList != null
-                        && mAchievementList.size() >= visibleThreshold
-                        && mOnLoadMoreListener != null) {
-                    lastErrorTime = System.currentTimeMillis();
-                    mOnLoadMoreListener.onLoadMore(lastVisibleItem);
-                    isLoading = true;
-                }
-            }
-        });
-    }
+        this.mContext = mContext;}
 
     public void setOnLoadMoreListener(OnLoadMoreListener mOnLoadMoreListener) {
         this.mOnLoadMoreListener = mOnLoadMoreListener;
@@ -161,11 +145,17 @@ public class AchievementAdapter extends RecyclerView.Adapter<AchievementAdapter.
 
 
     class ViewHolder extends BaseViewHolder {
-        @BindView(R.id.achievementNameTextView)
-        TextView achievementNameTextView;
-        @BindView(R.id.achievementDescTextView)
-        TextView achievementDescTextView;
+        @BindView(R.id.cardAchievement)
+        CardView cardAchievement;
 
+        @BindView(R.id.achievementNameTextView)
+        RobotoTextView achievementNameTextView;
+
+        @BindView(R.id.achievementDescTextView)
+        RobotoTextView achievementDescTextView;
+
+        @BindView(R.id.picAchievement)
+        ImageView picAchievement;
 
         Context context;
 
@@ -178,6 +168,14 @@ public class AchievementAdapter extends RecyclerView.Adapter<AchievementAdapter.
         @Override
         public void bind(Achievement achievement) {
             if (achievement != null) {
+                Glide.with(context).load(achievement.getPic()).into(picAchievement);
+                if (achievement.getTextColor() != null) {
+                    achievementNameTextView.setTextColor(Color.parseColor(achievement.getTextColor()));
+                    achievementDescTextView.setTextColor(Color.parseColor(achievement.getTextColor()));
+                }
+                if (achievement.getBackgroundColor() != null) {
+                    cardAchievement.setCardBackgroundColor(Color.parseColor(achievement.getBackgroundColor()));
+                }
                 achievementNameTextView.setText(achievement.getName() != null ? achievement.getName() : "");
                 achievementDescTextView.setText(achievement.getDesc() != null ? achievement.getDesc() : "");
             }
@@ -185,13 +183,19 @@ public class AchievementAdapter extends RecyclerView.Adapter<AchievementAdapter.
 
         @Override
         void clear() {
-
-            if (achievementNameTextView != null)
+            if (cardAchievement != null) {
+                cardAchievement.setCardBackgroundColor(Color.WHITE);
+            }
+            if (achievementNameTextView != null) {
                 achievementNameTextView.setText("");
-            if (achievementDescTextView != null)
+                achievementNameTextView.setTextColor(Color.BLACK);
+            }
+            if (achievementDescTextView != null) {
                 achievementDescTextView.setText("");
+                achievementDescTextView.setTextColor(Color.BLACK);
+            }
+
+
         }
-
     }
-
 }

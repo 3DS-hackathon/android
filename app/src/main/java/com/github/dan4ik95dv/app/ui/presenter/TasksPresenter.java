@@ -152,7 +152,7 @@ public class TasksPresenter implements Presenter<TasksMvpView> {
                         tasksMvpView.hideProgress();
                         realm.beginTransaction();
                         realm.copyToRealmOrUpdate(response.body().getTasks());
-                        realm.beginTransaction();
+                        realm.commitTransaction();
                         List<Task> tasks = realm.where(Task.class).findAll();
                         mTaskAdapter.setTaskList(tasks);
                     } else {

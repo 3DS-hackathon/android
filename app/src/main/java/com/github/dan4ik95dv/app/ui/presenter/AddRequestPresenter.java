@@ -227,6 +227,10 @@ public class AddRequestPresenter implements Presenter<AddRequestMvpView> {
 
 
     public void sentRequest() {
+        if (attachmentIds.size() == 0) {
+            Toast.makeText(activity, R.string.attach_doc_msg, Toast.LENGTH_SHORT).show();
+            return;
+        }
         TaskRequest taskRequest = new TaskRequest();
         taskRequest.setAttachments(attachmentIds);
         taskRequest.setTaskId(taskId);

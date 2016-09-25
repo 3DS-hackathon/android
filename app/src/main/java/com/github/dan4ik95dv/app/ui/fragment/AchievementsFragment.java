@@ -2,6 +2,7 @@ package com.github.dan4ik95dv.app.ui.fragment;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -34,6 +35,9 @@ public class AchievementsFragment extends BaseFragment implements AchievementsMv
 
     @BindView(R.id.achievementsRecyclerView)
     RecyclerView mAchievementsRecyclerView;
+
+    @BindView(R.id.swipeAchievementsContainer)
+    SwipeRefreshLayout mSwipeContainer;
 
 
     Toast errorToast;
@@ -79,7 +83,6 @@ public class AchievementsFragment extends BaseFragment implements AchievementsMv
 
         mAchievementsRecyclerView.setHasFixedSize(true);
         mAchievementsRecyclerView.setLayoutManager(mLayoutManager);
-        mAchievementsRecyclerView.addItemDecoration(new DividerItemDecoration(getActivity(), R.drawable.divider));
 
         ItemClickSupport.addTo(mAchievementsRecyclerView)
                 .setOnItemClickListener(new ItemClickSupport.OnItemClickListener() {
@@ -88,9 +91,15 @@ public class AchievementsFragment extends BaseFragment implements AchievementsMv
 
                     }
                 });
+        mSwipeContainer.setOnRefreshListener(presenter.getSwipeRefreshLayoutListener());
+        mSwipeContainer.setColorSchemeResources(
+                R.color.colorPrimary,
+                R.color.colorPrimary,
+                R.color.colorPrimary);
     }
 
     private void hideProgressItem() {
+        hideProgress();
         if (presenter.getAdapter().getAchievementList().size() > 0 &&
                 presenter.getAdapter().getAchievementList().get(presenter.getAdapter().getAchievementList().size() - 1) == null) {
             presenter.getAdapter().getAchievementList().remove(presenter.getAdapter().getAchievementList().size() - 1);
@@ -126,7 +135,9 @@ public class AchievementsFragment extends BaseFragment implements AchievementsMv
 
     @Override
     public void hideProgress() {
-
+        if (mSwipeContainer != null) {
+            mSwipeContainer.setRefreshing(false);
+        }
     }
 
 }

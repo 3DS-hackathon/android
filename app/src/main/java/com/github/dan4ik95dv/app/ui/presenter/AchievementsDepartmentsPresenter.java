@@ -8,10 +8,9 @@ import android.support.v7.widget.RecyclerView;
 import com.github.dan4ik95dv.app.application.App;
 import com.github.dan4ik95dv.app.io.api.RestInterface;
 import com.github.dan4ik95dv.app.model.Department;
-import com.github.dan4ik95dv.app.model.achievement.AchievementsResponse;
 import com.github.dan4ik95dv.app.ui.activity.BaseActivity;
 import com.github.dan4ik95dv.app.ui.adapter.AchievementAdapter;
-import com.github.dan4ik95dv.app.ui.view.AchievementsMvpView;
+import com.github.dan4ik95dv.app.ui.view.AchievementsDepartmentsMvpView;
 import com.github.dan4ik95dv.app.util.Constants;
 
 import javax.inject.Inject;
@@ -22,7 +21,7 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 
-public class AchievementsPresenter implements Presenter<AchievementsMvpView> {
+public class AchievementsDepartmentsPresenter implements Presenter<AchievementsDepartmentsMvpView> {
     @Inject
     SharedPreferences sharedPreferences;
 
@@ -33,21 +32,23 @@ public class AchievementsPresenter implements Presenter<AchievementsMvpView> {
     Realm realm;
 
     private AchievementAdapter mAchievementAdapter;
-    private AchievementsMvpView achievementsMvpView;
+    private AchievementsDepartmentsMvpView achievementsDepartmentsMvpView;
+
     RecyclerView.AdapterDataObserver mAdapterDataObserver = new RecyclerView.AdapterDataObserver() {
         @Override
         public void onChanged() {
             super.onChanged();
-            achievementsMvpView.hideProgress();
+            achievementsDepartmentsMvpView.hideProgress();
         }
     };
+
     private String token;
     private Context context;
     private BaseActivity activity;
     private Department department;
     private Boolean hasNext = true;
 
-    public AchievementsPresenter(Context context) {
+    public AchievementsDepartmentsPresenter(Context context) {
         this.context = context;
         this.activity = (BaseActivity) context;
         App.getInstance().getClientComponent().inject(this);
@@ -55,13 +56,14 @@ public class AchievementsPresenter implements Presenter<AchievementsMvpView> {
     }
 
     @Override
-    public void attachView(AchievementsMvpView view) {
-        this.achievementsMvpView = view;
+    public void attachView(AchievementsDepartmentsMvpView view) {
+        this.achievementsDepartmentsMvpView = view;
     }
+
 
     @Override
     public void detachView() {
-        this.achievementsMvpView = null;
+        this.achievementsDepartmentsMvpView = null;
     }
 
     public AchievementAdapter getAdapter() {
@@ -70,9 +72,9 @@ public class AchievementsPresenter implements Presenter<AchievementsMvpView> {
 
 
     public void init() {
-        mAchievementAdapter = new AchievementAdapter(context, achievementsMvpView.getAchievementsRecyclerView());
+        mAchievementAdapter = new AchievementAdapter(context, achievementsDepartmentsMvpView.getAchievementsRecyclerView());
         mAchievementAdapter.registerAdapterDataObserver(mAdapterDataObserver);
-        getAchievements();
+        getAchievementsDepartment();
     }
 
 
@@ -80,28 +82,28 @@ public class AchievementsPresenter implements Presenter<AchievementsMvpView> {
         return new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
-                getAchievements();
+                getAchievementsDepartment();
             }
         };
     }
 
 
-    private void getAchievements() {
+    private void getAchievementsDepartment() {
         if (token != null) {
-            restInterface.getAchievements(token, 0, 999).enqueue(new Callback<AchievementsResponse>() {
+            restInterface.getDepartment(token).enqueue(new Callback<Department>() {
                 @Override
-                public void onResponse(Call<AchievementsResponse> call, Response<AchievementsResponse> response) {
+                public void onResponse(Call<Department> call, Response<Department> response) {
                     if (response.isSuccessful()) {
-                        achievementsMvpView.hideProgress();
-                        mAchievementAdapter.setAchievementList(response.body().getAchievements());
+                        department = response.body();
+
                     } else {
-                        achievementsMvpView.showError();
+                        achievementsDepartmentsMvpView.showError();
                     }
                 }
 
                 @Override
-                public void onFailure(Call<AchievementsResponse> call, Throwable t) {
-                    achievementsMvpView.showError();
+                public void onFailure(Call<Department> call, Throwable t) {
+                    achievementsDepartmentsMvpView.showError();
                 }
             });
         }

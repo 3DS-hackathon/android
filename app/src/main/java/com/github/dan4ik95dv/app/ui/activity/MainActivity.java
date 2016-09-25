@@ -287,6 +287,8 @@ public class MainActivity extends BaseActivity implements MainMvpView, ProfileMv
             case R.id.action_logout:
                 profilePresenter.logout();
                 break;
+            case R.id.action_department:
+                profilePresenter.showDepartment();
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
