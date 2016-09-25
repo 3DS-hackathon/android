@@ -49,7 +49,7 @@ public class BaseActivity extends AppCompatActivity {
 
     public void showMoreTaskActivity(Integer taskId) {
         Intent intent = new Intent(this, MoreTaskActivity.class);
-       intent.putExtra(Constants.TASK_ID, taskId);
+        intent.putExtra(Constants.TASK_ID, taskId);
         AndroidUtils.startActivitySafe(this, intent, R.string.error_unknown);
     }
 

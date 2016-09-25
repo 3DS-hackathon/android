@@ -39,6 +39,8 @@ public class AddRequestActivity extends BaseActivity implements AddRequestMvpVie
 
     @BindView(R.id.taskPicImageView)
     ImageView mTaskPicImageView;
+    @BindView(R.id.descTaskTextView)
+    TextView mDescTaskTextView;
     @BindView(R.id.priceTaskTextView)
     TextView mPriceTaskTextView;
     @BindView(R.id.xpTaskTextView)
@@ -58,6 +60,7 @@ public class AddRequestActivity extends BaseActivity implements AddRequestMvpVie
 
     @BindView(R.id.imageGallery)
     RecyclerView imageGallery;
+    org.solovyev.android.views.llm.LinearLayoutManager wrappingLinearLayoutManager;
 
     @OnClick(R.id.attachAdd)
     public void attachAddOnClick() {
@@ -69,8 +72,6 @@ public class AddRequestActivity extends BaseActivity implements AddRequestMvpVie
         progress.show();
         presenter.sentRequest();
     }
-
-    org.solovyev.android.views.llm.LinearLayoutManager wrappingLinearLayoutManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -137,8 +138,12 @@ public class AddRequestActivity extends BaseActivity implements AddRequestMvpVie
         mPriceTaskTextView.setText(getString(R.string.balance, Utils.formatNumber(task.getPrice())));
         mXpTaskTextView.setText(getString(R.string.xpa, Utils.formatNumber(task.getExperience())));
         nameTaskTextView.setText(TextUtils.isEmpty(task.getName()) ? "" : task.getName());
-        typeTaskTextView.setText(TextUtils.isEmpty(task.getType()) ? "" : task.getType());
+        if (!TextUtils.isEmpty(task.getType())) {
+            String type = getString(task.getType() == "task" ? R.string.quest_str : R.string.count);
+            typeTaskTextView.setText(type);
+        }
 
+        mDescTaskTextView.setText(TextUtils.isEmpty(task.getDesc()) ? "" : task.getDesc());
 
         mToolbar.setTitle(TextUtils.isEmpty(task.getName()) ? "" : task.getName());
 

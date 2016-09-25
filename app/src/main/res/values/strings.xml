@@ -40,4 +40,6 @@
     <string name="alert_attach_info">Внимание! Для выполнения этого задания необходимо прикреплять фотографии.</string>
     <string name="select_pic">Выберите изображение</string>
     <string name="request_has_been_added">Заявка успешно добавлена!</string>
+    <string name="quest_str">Квест</string>
+    <string name="count">Количество</string>
 </resources>

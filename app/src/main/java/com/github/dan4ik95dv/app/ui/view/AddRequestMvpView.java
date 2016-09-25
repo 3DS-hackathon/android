@@ -4,6 +4,8 @@ import com.github.dan4ik95dv.app.model.task.Task;
 
 public interface AddRequestMvpView extends MvpView {
     void showError();
+
     void requestSuccess();
-    void  fillTask(Task task);
+
+    void fillTask(Task task);
 }

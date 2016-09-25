@@ -5,7 +5,6 @@ import android.graphics.PorterDuff;
 import android.support.annotation.Nullable;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.AppCompatButton;
-import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -39,7 +38,6 @@ public class CurrentTaskAdapter extends RecyclerView.Adapter<CurrentTaskAdapter.
     public CurrentTaskAdapter(Context mContext) {
         this.mContext = mContext;
     }
-
 
 
     public List<Task> getTaskList() {

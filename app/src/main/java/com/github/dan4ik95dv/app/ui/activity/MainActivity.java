@@ -7,7 +7,6 @@ import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.design.widget.NavigationView;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.GravityCompat;
-import android.support.v4.view.ViewCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v4.widget.SwipeRefreshLayout;
@@ -244,7 +243,7 @@ public class MainActivity extends BaseActivity implements MainMvpView, ProfileMv
         Glide.with(this).load(user.getAvatar()).error(R.drawable.user).placeholder(R.drawable.user).into(userAvatarCircleImageView);
         String fullName = TextUtils.isEmpty(user.getFullName()) ? getString(R.string.anonim) : user.getFullName();
 
-            userFullNameTextView.setText(fullName);
+        userFullNameTextView.setText(fullName);
 
         if (user.getLevel() != null) {
             userLevelNameTextView.setText(user.getLevel().getName());
